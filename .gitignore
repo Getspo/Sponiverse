@@ -95,8 +95,9 @@ replay_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java
 
-# 폼.xml & readme.md & pom.properties & js폴더 #
-pom.xml
+# add ignore properties file and etc #
 README.md
+pom.xml
 pom.properties
-js/
+config.properties
+db.properties
