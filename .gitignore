@@ -97,7 +97,6 @@ replay_pid*
 
 # add ignore properties file and etc #
 README.md
-pom.xml
 pom.properties
 config.properties
 db.properties
