@@ -313,4 +313,5 @@ public class EventController {
 		return Common.Mypage.VIEW_PATH + "mypage.jsp";
 	}
 
+	
 }
