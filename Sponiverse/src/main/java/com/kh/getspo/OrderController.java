@@ -1,6 +1,5 @@
 package com.kh.getspo;
 
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,13 +11,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import dao.EventDAO;
 import dao.OrderDAO;
+import dao.UserDAO;
+import util.Common;
+import vo.EventVO;
 import vo.OrderVO;
 import vo.PayVO;
 import vo.UserVO;
 
 @Controller
 public class OrderController {
+
    @Autowired
    HttpServletRequest request;
    @Autowired
@@ -131,8 +135,27 @@ public class OrderController {
     	   return "redirect:" + referer;
       }
 
+    
+	// 마이페이지 참가 리스트 삭제
+	@RequestMapping("/cancelEvent.do")
+	@ResponseBody
+	public String cancelEvent(@RequestParam("user_idx") int user_idx, @RequestParam("event_idx") int event_idx) {
 
+		int res_del = order_dao.cancelEvent(user_idx, event_idx);
+		session.removeAttribute("event");
+		if (res_del > 0) {
+			return "[{'result':'clear'}]";// 삭제 성공
+		} else {
+			return "[{'result':'fail'}]";// 삭제 실패
+		}
+
+	}
    
-   
+
+
+	
+
+
+
 
 }

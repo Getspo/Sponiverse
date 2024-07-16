@@ -348,4 +348,15 @@ public class EventController {
 		return Common.Mypage.VIEW_PATH + "mypage.jsp";
 	}
 
+	// 호스트 페이지 행사 리스트 삭제
+	@RequestMapping("/deleteEvent.do")
+	@ResponseBody
+	public String deleteEvent(@RequestParam("event_idx") int event_idx) {
+		int res = event_dao.deleteEvent(event_idx);
+		if (res > 0) {
+			return "[{'result':'clear'}]";// 삭제 성공
+		} else {
+			return "[{'result':'fail'}]";// 삭제 실패
+		}
+	}
 }
