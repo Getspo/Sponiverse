@@ -159,9 +159,9 @@
                     <span>${event.event_addr}${event.event_addrdetail}</span>
                 </div>
             </section>
-            
-            <hr><br>
-            
+            <br>
+            <hr>
+            <br>
             <section id="content" class="content">
                 <div>${event.event_content}</div>
             </section>

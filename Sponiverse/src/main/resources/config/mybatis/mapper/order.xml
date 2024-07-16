@@ -3,7 +3,6 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="o">
-
 	<insert id="user_order" parameterType="order"
 		useGeneratedKeys="true" keyProperty="order_idx" keyColumn="order_idx">
 		INSERT INTO
@@ -25,8 +24,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{order_age, jdbcType=INTEGER}
 		)
 	</insert>
-
-
 	<insert id="user_pay" parameterType="pay">
 		INSERT INTO getspo_pay (
 		pay_idx, order_idx, user_idx, pay_price, imp_uid, merchant_uid,
@@ -41,7 +38,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{apply_num}
 		)
 	</insert>
-
 	<!-- 유저별 신청 행사 리스트 -->
 	<select id="user_order_list" parameterType="int"
 		resultType="order">
@@ -52,12 +48,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		o.event_idx = e.event_idx
 		WHERE o.user_idx = #{user_idx}
 	</select>
-
 	<!-- 사용자가 이미 신청한 이벤트인지 확인 -->
 	<select id="isAlreadyRegistered" parameterType="java.util.Map"
 		resultType="int">
-		SELECT COUNT(*) FROM getspo_order WHERE user_idx = #{user_idx} AND event_idx
+		SELECT COUNT(*) FROM getspo_order WHERE user_idx =
+		#{user_idx} AND event_idx
 		= #{event_idx}
 	</select>
+
+	<!-- 신청이벤트 삭제 -->
+	<delete id="user_order_delete" parameterType="int">
+		delete from getspo_order WHERE order_idx = #{order_idx}
+	</delete>
+
+	<!-- 행사 신청한 유저 조회 -->
+	<select id="user_order_event" parameterType="int" resultType="order">
+		SELECT * FROM getspo_order where event_idx = #{event_idx}
+	</select>
+
+  <!-- 마이페이지 참가 행사 목록 - 행사 취소(삭제) -->
+	<delete id="cancel_event" parameterType="java.util.Map">
+		delete from getspo_order
+		WHERE user_idx = #{user_idx}
+			and event_idx = #{event_idx}
+	</delete>
 
 </mapper>

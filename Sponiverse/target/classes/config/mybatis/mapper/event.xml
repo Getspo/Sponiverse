@@ -3,11 +3,12 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="e">
-
 	<!-- 이벤트 추가 -->
 	<insert id="event_insert" parameterType="event">
-		INSERT INTO getspo_event VALUES (seq_event_idx.nextVal, #{user_idx},
-		#{event_sports_idx}, #{event_loc}, #{event_name}, #{event_h_start},
+		INSERT INTO getspo_event
+		VALUES (seq_event_idx.nextVal, #{user_idx},
+		#{event_sports_idx},
+		#{event_loc}, #{event_name}, #{event_h_start},
 		#{event_h_end},
 		#{event_r_start},
 		#{event_r_end},
@@ -32,10 +33,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 
-
 	<!-- 유저별 행사 조회 -->
 	<select id="userevents" parameterType="int" resultType="event">
-		select * from getspo_event where user_idx = #{user_idx} order by
+		select *
+		from getspo_event where user_idx = #{user_idx} order by
 		event_createdate DESC
 	</select>
 
@@ -47,8 +48,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM (
 		SELECT * FROM getspo_event
 		<trim prefix="WHERE" prefixOverrides="OR|AND">
-			<if test="event_loc != null">
-				event_loc LIKE '%' || #{event_loc} || '%'
+			<if test="event_loc_list != null">
+				<foreach item="location" collection="event_loc_list"
+					open="(" separator="OR" close=")">
+					event_loc LIKE '%' || #{location} || '%'
+				</foreach>
+			</if>
+			<if test="event_sports_idx != null">
+				AND event_sports_idx = #{event_sports_idx}
 			</if>
 			<if test="event_name != null">
 				OR event_name LIKE '%' || #{event_name} || '%'
@@ -60,7 +67,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				OR event_addr LIKE '%' || #{event_addr} || '%'
 			</if>
 			<if test="event_addrdetail != null">
-				OR event_addrdetail LIKE '%' || #{event_addrdetail} || '%'
+				OR event_addrdetail LIKE '%' || #{event_addrdetail} ||
+				'%'
 			</if>
 			<if test="event_h_start != null">
 				OR event_h_start LIKE '%' || #{event_h_start} || '%'
@@ -73,14 +81,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 		WHERE no BETWEEN #{start} AND #{end}
 	</select>
-
 	<!-- 페이지 메뉴에 필요한 전체 행사 게시글 수 조회 -->
 	<select id="event_count" resultType="int"
 		parameterType="java.util.Map">
 		SELECT COUNT(*) FROM getspo_event
 		<trim prefix="WHERE" prefixOverrides="OR|AND">
-			<if test="event_loc != null">
-				event_loc LIKE '%' || #{event_loc} || '%'
+			<if test="event_loc_list != null">
+				<foreach item="location" collection="event_loc_list"
+					open="(" separator="OR" close=")">
+					event_loc LIKE '%' || #{location} || '%'
+				</foreach>
+			</if>
+			<if test="event_sports_idx != null">
+				AND event_sports_idx = #{event_sports_idx}
 			</if>
 			<if test="event_name != null">
 				OR event_name LIKE '%' || #{event_name} || '%'
@@ -92,7 +105,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				OR event_addr LIKE '%' || #{event_addr} || '%'
 			</if>
 			<if test="event_addrdetail != null">
-				OR event_addrdetail LIKE '%' || #{event_addrdetail} || '%'
+				OR event_addrdetail LIKE '%' || #{event_addrdetail} ||
+				'%'
 			</if>
 			<if test="event_h_start != null">
 				OR event_h_start LIKE '%' || #{event_h_start} || '%'
@@ -102,20 +116,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</trim>
 	</select>
-
 	<!-- 이벤트 디테일 idx값별로 가져오기 -->
 	<select id="getevent_idx" resultType="event" parameterType="int">
 		SELECT * FROM getspo_event WHERE event_idx = #{event_idx}
 	</select>
-
 	<!-- 이벤트 신청된 티켓 조회 -->
 	<select id="apply_event" parameterType="int" resultType="int">
-		SELECT COUNT(*) FROM getspo_order WHERE event_idx = #{event_idx}
+		SELECT
+		COUNT(*) FROM getspo_order WHERE event_idx = #{event_idx}
 	</select>
-
 	<!-- 이벤트 수정 update_event -->
 	<update id="update_event" parameterType="event">
-		UPDATE getspo_event set event_sports_idx = #{event_sports_idx},
+		UPDATE getspo_event set
+		event_sports_idx = #{event_sports_idx},
 		event_loc = #{event_loc},
 		event_name = #{event_name},
 		event_h_start = #{event_h_start},
@@ -124,36 +137,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		event_r_end = #{event_r_end},
 		event_addrcode = #{event_addrcode},
 		event_addr = #{event_addr},
-		event_addrdetail = #{event_addrdetail, jdbcType=VARCHAR},
+		event_addrdetail = #{event_addrdetail,
+		jdbcType=VARCHAR},
 		event_thumbnail = #{event_thumbnail},
-		event_content = #{event_content},
+		event_content =
+		#{event_content},
 		event_paymethod = #{event_paymethod},
 		event_ticketname = #{event_ticketname},
-		event_max_joiner = #{event_max_joiner},
+		event_max_joiner =
+		#{event_max_joiner},
 		event_price = #{event_price},
-		event_ticket_open = #{event_ticket_open},
+		event_ticket_open =
+		#{event_ticket_open},
 		event_contact_name = #{event_contact_name},
 		event_contact_email = #{event_contact_email},
-		event_contact_tel = #{event_contact_tel},
+		event_contact_tel =
+		#{event_contact_tel},
 		event_bank = #{event_bank, jdbcType=VARCHAR},
 		event_account = #{event_account, jdbcType=VARCHAR},
-		event_account_name = #{event_account_name, jdbcType=VARCHAR},
+		event_account_name
+		= #{event_account_name, jdbcType=VARCHAR},
 		event_createdate = sysdate
 		WHERE event_idx = #{event_idx}
 	</update>
-
-
 	<!-- 조회수 증가 -->
 	<update id="event_update_viewcount" parameterType="int">
-		update getspo_event set event_viewcount = event_viewcount + 1 where
-		event_idx = #{event_idx}
+		update
+		getspo_event set event_viewcount = event_viewcount + 1 where
+		event_idx
+		= #{event_idx}
 	</update>
-
 	<!-- 다가오는 행사 리스트 -->
 	<select id="fast_event" resultType="event">
-		SELECT * FROM getspo_event WHERE event_h_start >= TRUNC(SYSDATE)
+		SELECT * FROM getspo_event
+		WHERE event_h_start >= TRUNC(SYSDATE)
 		ORDER BY event_h_start ASC
 	</select>
 
-
+	<!-- 호스트센터 행사 목록 - 행사 삭제 -->
+	<delete id="delete_event" parameterType="int">
+		delete from getspo_event
+		where event_idx = #{event_idx}
+	</delete>
 </mapper>
