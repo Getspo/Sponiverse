@@ -155,5 +155,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY event_h_start ASC
 	</select>
 
-	
+	<!-- 호스트센터 행사 목록 - 행사 삭제 -->
+	<delete id="delete_event" parameterType="int">
+		delete from getspo_event
+		where event_idx = #{event_idx}
+	</delete>
 </mapper>

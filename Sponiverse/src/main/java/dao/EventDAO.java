@@ -92,4 +92,9 @@ public class EventDAO {
 		return sqlSession.selectList("e.fast_event");
 	}
 
+	public int deleteEvent(int event_idx) {
+		int res = sqlSession.delete("e.delete_event", event_idx);
+		return res;
+	}
+
 }

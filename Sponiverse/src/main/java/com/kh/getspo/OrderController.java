@@ -32,7 +32,6 @@ public class OrderController {
 
 	@Autowired
 	OrderDAO order_dao;
-	
 
 	@Autowired
 	UserDAO user_dao;
@@ -125,9 +124,7 @@ public class OrderController {
 	@RequestMapping("/cancelEvent.do")
 	@ResponseBody
 	public String cancelEvent(@RequestParam("user_idx") int user_idx, @RequestParam("event_idx") int event_idx) {
-		// 복호화
-	
-	
+
 		int res_del = order_dao.cancelEvent(user_idx, event_idx);
 		session.removeAttribute("event");
 		if (res_del > 0) {
@@ -136,7 +133,6 @@ public class OrderController {
 			return "[{'result':'fail'}]";// 삭제 실패
 		}
 
-		
 	}
 
 }

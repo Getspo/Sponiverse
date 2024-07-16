@@ -25,8 +25,7 @@
 						<th>행사장소</th>
 						<th>행사날짜</th>
 						<th>신청날짜</th>
-						<th>참가취소
-						</th>
+						<th>참가취소</th>
 					</tr>
 
 					<c:forEach var="order" items="${order}">
