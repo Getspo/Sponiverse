@@ -16,59 +16,41 @@
    <script src="/getspo/resources/js/httpRequest.js"></script>
     
     <script>
-    	//종목 선택시
-	    document.addEventListener('DOMContentLoaded', function() {
-	    	const running = document.querySelector('#running');
-	        const triathlon = document.querySelector('#triathlon');
-	        const locationSelect = document.getElementById('location');
+        function goToPage(pageNumber) {
+            var form = document.getElementById('pagingForm');
+            form.page.value = pageNumber;
+            form.submit();
+        }
+      
+        // 필터링 기능 구현
+        function filterEvents() {
+           var location = document.getElementById('location').value;
+           var sports = [];
+           if (document.getElementById('running').checked) {
+                sports.push('running');
+            }
+            if (document.getElementById('triathlon').checked) {
+                sports.push('triathlon');
+            }
+           
+            let url = "event_list.do";
+            let param = "event_loc=" + location;
+            sendRequest(url, param, resultFn, "post");
+        }
+        function resultFn(){
+           if(xhr.readyState == 4 && xhr.status == 200){
+            let data = xhr.responseText;
+            
+         }
+        }
 
-	        running.addEventListener('click', function() {
-	            if (running.checked) {
-	                triathlon.checked = false;
-	            }
-	            applyFilters();
-	        });
-
-	        triathlon.addEventListener('click', function() {
-	            if (triathlon.checked) {
-	                running.checked = false;
-	            }
-	            applyFilters();
-	        });
-
-	        locationSelect.addEventListener('change', function() {
-	            applyFilters();
-	        });
-	    });
-
-	    function applyFilters() {
-	        let loc = document.getElementById('location').value;
-	        let sport = '';
-
-	        if (document.getElementById('running').checked) {
-	            sport = document.getElementById('running').value;
-	        } else if (document.getElementById('triathlon').checked) {
-	            sport = document.getElementById('triathlon').value;
-	        }
-
-	        let url = "event_list.do?event_loc=" + encodeURIComponent(loc);
-	        if (sport) {
-	            url += "&event_sports_idx=" + sport;
-	        }
-
-	        location.href = url;
-	    }
-    	
-    	    
-		//리셋버튼 클릭시 초기화
         function resetFilters() {
             document.getElementById('location').value = 'all';
             document.getElementById('running').checked = false;
             document.getElementById('triathlon').checked = false;
-            applyFilters(); // 초기화 후 필터링 함수를 호출하여 전체 이벤트를 표시합니다.
+            // 필요한 다른 체크박스 초기화
+            filterEvents();
         }
-		
-		
     </script>
 </head>
 <body>
@@ -81,15 +63,15 @@
                 <!-- 지역 선택 -->
                 <div class="filter-item">
                     <label for="location">지역</label>
-                    <select id="location" name="location" class="location" onchange="locEvents();">
-                        <option value="all" ${selectedLoc == 'all' ? 'selected' : ''}>전체</option>
-                        <option value="서울_경기_인천" ${selectedLoc == '서울_경기_인천' ? 'selected' : ''}>서울/경기/인천</option>
-                        <option value="부산_울산_경남" ${selectedLoc == '부산_울산_경남' ? 'selected' : ''}>부산/울산/경남</option>
-                        <option value="대구_경북" ${selectedLoc == '대구_경북' ? 'selected' : ''}>대구/경북</option>
-                        <option value="충북_충남_대전_세종" ${selectedLoc == '충북_충남_대전_세종' ? 'selected' : ''}>충청/대전/세종</option>
-                        <option value="전남_전북_광주" ${selectedLoc == '전남_전북_광주' ? 'selected' : ''}>전라/광주</option>
-                        <option value="강원" ${selectedLoc == '강원' ? 'selected' : ''}>강원</option>
-                        <option value="제주" ${selectedLoc == '제주' ? 'selected' : ''}>제주</option>
+                    <select id="location" name="location" class="location" onchange="filterEvents();">
+                        <option value="all">전체</option>
+                        <option value="서울_경기_인천">서울/경기/인천</option>
+                        <option value="부산_울산_경남">부산/울산/경남</option>
+                        <option value="대구_경북">대구/경북</option>
+                        <option value="충북_충남_대전_세종">충청/대전/세종</option>
+                        <option value="전남_전북_광주">전라/광주</option>
+                        <option value="강원">강원</option>
+                        <option value="제주">제주</option>
                         <!-- 필요한 다른 지역 추가 -->
                     </select>
                 </div>
@@ -98,11 +80,11 @@
                     <label>종목</label>
                     <div class="checkbox-group">
                         <div>
-                            <input type="checkbox" id="running" name="sport" value="1" ${selectedSport == 1 ? 'checked' : ''}>
+                            <input type="checkbox" id="running" name="sport" value="running" onclick="filterEvents()">
                             <label for="running">러닝</label>
                         </div>
                         <div>
-                            <input type="checkbox" id="triathlon" name="sport" value="2" ${selectedSport == 2 ? 'checked' : ''}>
+                            <input type="checkbox" id="triathlon" name="sport" value="triathlon" onclick="filterEvents()">
                             <label for="triathlon">철인3종</label>
                         </div>
                         <!-- 필요한 다른 종목 추가 -->

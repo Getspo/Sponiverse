@@ -82,7 +82,7 @@ public class EventController {
 
 	// 행사 전체보기
 	@RequestMapping("/event_list.do")
-	public String event_list(Model model, String page, String search_text, String event_loc, Integer event_sports_idx) {
+	public String event_list(Model model, String page, String search_text) {
 		int nowPage = 1;
 		if (page != null && !page.isEmpty()) {
 			nowPage = Integer.parseInt(page);
@@ -111,28 +111,7 @@ public class EventController {
 			map.put("event_h_start", search_text);
 			map.put("event_r_start", search_text);
 		}
-		
-		// event_loc 파라미터 처리
-		if (event_loc != null && !event_loc.equals("all")) {
-	        // 여러 지역을 처리하기 위해 리스트로 변환
-	        String[] locations = event_loc.split("_");
-	        List<String> locationList = new ArrayList<>();
-	        for (String loc : locations) {
-	            locationList.add(loc);
-	        }
-	        map.put("event_loc_list", locationList);
-	    } else {
-	        map.put("event_loc_list", null);
-	    }
-		
-	    // event_sport_idx 파라미터 처리
-	    if (event_sports_idx != null) {
-	        map.put("event_sports_idx", event_sports_idx);
-	    } else {
-	        map.put("event_sports_idx", null);
-	    }
-		
-		
+
 		// 전체목록 가져오기
 		List<EventVO> events = event_dao.allevents(map);
 
@@ -141,21 +120,9 @@ public class EventController {
 
 		// 페이지 메뉴 생성
 		String search_param = "";
-	    if (search_text != null && !search_text.isEmpty()) {
-	        search_param = String.format("search_text=%s", search_text);
-	    }
-	    if (event_loc != null && !event_loc.isEmpty()) {
-	        if (!search_param.isEmpty()) {
-	            search_param += "&";
-	        }
-	        search_param += String.format("event_loc=%s", event_loc);
-	    }
-	    if (event_sports_idx != null) {
-	        if (!search_param.isEmpty()) {
-	            search_param += "&";
-	        }
-	        search_param += String.format("event_sports_idx=%d", event_sports_idx);
-	    }
+		if (search_text != null && !search_text.isEmpty()) {
+			search_param = String.format("search_text=%s", search_text);
+		}
 
 		// 페이징 처리 문자열 생성
 		String pageMenu = Paging.getPaging("event_list.do", nowPage, row_total, search_param, Common.Board.BLOCKLIST,
@@ -165,8 +132,6 @@ public class EventController {
 		model.addAttribute("events", events);
 		model.addAttribute("pageMenu", pageMenu);
 		model.addAttribute("totalEvent", row_total);// 전체 이벤트 수
-		model.addAttribute("selectedLoc", event_loc); // 선택된 옵션 값을 모델에 추가
-		model.addAttribute("selectedSport", event_sports_idx); // 선택된 종목 값을 모델에 추가
 		// 조회수 증가를 위해 기록되있던 show정보를 삭제
 		session.removeAttribute("show");
 
@@ -348,15 +313,4 @@ public class EventController {
 		return Common.Mypage.VIEW_PATH + "mypage.jsp";
 	}
 
-	// 호스트 페이지 행사 리스트 삭제
-	@RequestMapping("/deleteEvent.do")
-	@ResponseBody
-	public String deleteEvent(@RequestParam("event_idx") int event_idx) {
-		int res = event_dao.deleteEvent(event_idx);
-		if (res > 0) {
-			return "[{'result':'clear'}]";// 삭제 성공
-		} else {
-			return "[{'result':'fail'}]";// 삭제 실패
-		}
-	}
 }

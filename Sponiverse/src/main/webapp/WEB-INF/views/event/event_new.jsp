@@ -188,12 +188,12 @@
                       <label for="entry_tel">휴대전화번호 *</label>
                   </span>
                   <span>
-                      <input id="entry_gender" name="user_sex" type="checkbox" value="성별" >
-                      <label for="entry_gender">성별</label>
+                      <input id="entry_age" name="user_age" type="checkbox" value="생년월일" checked disabled>
+                      <label for="entry_age">생년월일 *</label>
                   </span>
                   <span>
-                      <input id="entry_age" name="user_age" type="checkbox" value="나이">
-                      <label for="entry_age">나이</label>
+                      <input id="entry_gender" name="user_sex" type="checkbox" value="성별" checked disabled>
+                      <label for="entry_gender">성별 *</label>
                   </span>
             </div>    
             
@@ -252,112 +252,119 @@
     </form>
        
     <script>
-		    /* 상세정보 입력창 관련 함수 */
-		    $(document).ready(function () {
-		        $('#summernote').summernote({
-		            codeviewFilter: false,
-		            codeviewIframeFilter: false,
-		            height: 500,
-		            minHeight: null,
-		            maxHeight: null,
-		            focus: false,
-		            lang: 'ko-KR',
-		            toolbar: [
-		                ['style', ['style']],
-		                ['fontsize', ['fontsize']],
-		                ['font', ['bold', 'underline', 'clear']],
-		                ['color', ['color']],
-		                ['table', ['table']],
-		                ['para', ['ul', 'ol', 'paragraph']],
-		                ['height', ['height']],
-		                ['insert', ['picture', 'link', 'video']],
-		                ['view', ['codeview', 'fullscreen', 'help']],
-		            ],
-		            fontSizes: [
-		                '8', '9', '10', '11', '12', '14', '16', '18',
-		                '20', '22', '24', '28', '30', '36', '50', '72',
-		            ],
-		            styleTags: [
-		                'p',
-		                {
-		                    title: 'Blockquote',
-		                    tag: 'blockquote',
-		                    className: 'blockquote',
-		                    value: 'blockquote',
-		                },
-		                'pre',
-		                {
-		                    title: 'code_light',
-		                    tag: 'pre',
-		                    className: 'code_light',
-		                    value: 'pre',
-		                },
-		                {
-		                    title: 'code_dark',
-		                    tag: 'pre',
-		                    className: 'code_dark',
-		                    value: 'pre',
-		                },
-		                'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-		            ],
-		            callbacks: {
-		                onImageUpload: function (files, editor, welEditable) {
-		                    for (var i = files.length - 1; i >= 0; i--) {
-		                        uploadSummernoteImageFile(files[i], this);
-		                    }
-		                },
-		            },
-		        });
-		
-		        // Enter 키 입력 시 <br><br> 삽입
-		        $('#summernote').on("summernote.enter", function(we, e) {
-		            $(this).summernote("pasteHTML", "<br><br>");
-		            e.preventDefault();
-		        });
-		
-		        $('.new_event_form').on('submit', function() {
-		            var content = $('#summernote').summernote('code');
-		            content = content.replace(/<\/p>,/g, '</p>'); // <p>태그 뒤에 오는 쉼표 제거
-		            $('#summernote_content').val(content);
-		        });
-		    });
-		
-		    function uploadSummernoteImageFile(file, el) {
-		        var data = new FormData();
-		        data.append("file", file);
-		        $.ajax({
-		            data: data,
-		            type: "POST",
-		            url: "uploadSummernoteImageFile",
-		            contentType: false,
-		            enctype: 'multipart/form-data',
-		            processData: false,
-		            success: function(data) {
-		                console.log("서버 응답:", data);
-		                try {
-		                    var jsonResponse;
-		                    if (typeof data === "string") {
-		                        jsonResponse = JSON.parse(data);
-		                    } else {
-		                        jsonResponse = data;
-		                    }
-		
-		                    if (jsonResponse.responseCode === "success") {
-		                        $(el).summernote('insertImage', jsonResponse.url);                    
-		                    } else {
-		                        alert("이미지 업로드에 실패했습니다.");
-		                    }
-		                } catch (e) {
-		                    console.error("JSON 파싱 오류:", e);
-		                    alert("서버 응답을 처리하는 중 오류가 발생했습니다.");
-		                }
-		            },
-		            error: function(jqXHR, textStatus, errorThrown) {
-		                console.error("AJAX 오류:", textStatus, errorThrown);
-		                alert("이미지 업로드 중 오류가 발생했습니다.");
-		            }
-		        });
-		    }
+            /* 상세정보 입력창 관련 함수 */
+			$(document).ready(function () {
+			    $('#summernote').summernote({
+			        codeviewFilter: false, // 코드 보기 필터 비활성화
+			        codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
+			        height: 500, // 에디터 높이
+			        minHeight: null, // 최소 높이
+			        maxHeight: null, // 최대 높이
+			        focus: false, // 에디터 로딩 후 포커스 설정
+			        lang: 'ko-KR', // 언어 설정 (한국어)
+			        toolbar: [
+			            ['style', ['style']], // 글자 스타일 설정 옵션
+			            ['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
+			            ['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
+			            ['color', ['color']], // 글자 색상 설정 옵션
+			            ['table', ['table']], // 테이블 삽입 옵션
+			            ['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
+			            ['height', ['height']], // 에디터 높이 조절 옵션
+			            ['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
+			            ['view', ['codeview', 'fullscreen', 'help']], // 코드 보기, 전체 화면, 도움말 옵션
+			        ],
+			        fontSizes: [
+			            '8', '9', '10', '11', '12', '14', '16', '18',
+			            '20', '22', '24', '28', '30', '36', '50', '72',
+			        ], // 글꼴 크기 옵션
+			        styleTags: [
+			            'p',  // 일반 문단 스타일 옵션
+			            {
+			                title: 'Blockquote',
+			                tag: 'blockquote',
+			                className: 'blockquote',
+			                value: 'blockquote',
+			            },  // 인용구 스타일 옵션
+			            'pre',  // 코드 단락 스타일 옵션
+			            {
+			                title: 'code_light',
+			                tag: 'pre',
+			                className: 'code_light',
+			                value: 'pre',
+			            },  // 밝은 코드 스타일 옵션
+			            {
+			                title: 'code_dark',
+			                tag: 'pre',
+			                className: 'code_dark',
+			                value: 'pre',
+			            },  // 어두운 코드 스타일 옵션
+			            'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
+			        ],
+			        callbacks: {
+			            onImageUpload: function (files, editor, welEditable) {
+			                // 파일 업로드 (다중 업로드를 위해 반복문 사용)
+			                for (var i = files.length - 1; i >= 0; i--) {
+			                    uploadSummernoteImageFile(files[i], this);
+			                }
+			            },
+			        },
+			    });
+			
+			    // 폼 제출 이벤트 핸들러
+			    $('.new_event_form').on('submit', function() {
+			        // Summernote 내용 가져오기
+			        var content = $('#summernote').summernote('code');
+			        // textarea에 내용 설정
+			        $('#summernote_content').val(content);
+			    });
+			});
+			
+			function uploadSummernoteImageFile(file, el) {
+			    var data = new FormData();
+			    data.append("file", file);
+
+			    // 콘솔에 FormData 출력 (디버깅용)
+			    for (var pair of data.entries()) {
+			        console.log(pair[0]+ ', ' + pair[1]);
+			    }
+
+			    $.ajax({
+			        data: data,
+			        type: "POST",
+			        url: "uploadSummernoteImageFile",
+			        contentType: false,
+			        enctype: 'multipart/form-data',
+			        processData: false,
+			        success: function(data) {
+			            console.log("서버 응답:", data);
+			            try {
+			                var jsonResponse;
+			                if (typeof data === "string") {
+			                    jsonResponse = JSON.parse(data);
+			                } else {
+			                    jsonResponse = data;
+			                }
+
+			                if (jsonResponse.responseCode === "success") {
+			                    var imageUrl = jsonResponse.url;
+			                    $(el).summernote('insertImage', imageUrl, function ($image) {
+			                        $image.css('width', '100%');
+			                    });
+			                } else {
+			                    alert("이미지 업로드에 실패했습니다.");
+			                }
+			            } catch (e) {
+			                console.error("JSON 파싱 오류:", e);
+			                alert("서버 응답을 처리하는 중 오류가 발생했습니다.");
+			            }
+			        },
+			        error: function(jqXHR, textStatus, errorThrown) {
+			            console.error("AJAX 오류:", textStatus, errorThrown);
+			            console.error("서버 응답:", jqXHR.responseText);
+			            alert("이미지 업로드 중 오류가 발생했습니다.");
+			        }
+			    });
+			}
       
             /* 결제방식에 따른 티켓 금액 입력창 활성화/비활성화 함수 */
                document.addEventListener('DOMContentLoaded', function() {
@@ -397,6 +404,7 @@
                function addNewItem() {
                    const entryGroup = document.getElementById('entry_group');
 
+                   // 새로운 체크박스 항목 생성
                    const newSpan = document.createElement('span');
                    const newCheckbox = document.createElement('input');
                    newCheckbox.type = 'checkbox';
@@ -422,6 +430,7 @@
                    newSpan.appendChild(newInput);
                    newSpan.appendChild(deleteButton);
 
+                   // 새로운 항목 추가
                    entryGroup.appendChild(newSpan);
                }
             
@@ -485,12 +494,12 @@
 
                function resetThumbnail() {
                    var thumbnailImageInput = document.getElementById('thumbnail_image');
-                   thumbnailImageInput.value = ''; 
-                   thumbnailImageInput.click(); 
+                   thumbnailImageInput.value = ''; // 초기화하여 다시 선택할 수 있도록 함
+                   thumbnailImageInput.click(); // 파일 선택 다이얼로그 표시
 
                    thumbnailImageInput.onchange = function(event) {
                        handleFileChange(event);
-                       thumbnailImageInput.onchange = handleFileChange; 
+                       thumbnailImageInput.onchange = handleFileChange; // 변경 이벤트 핸들러 복원
                    };
                }
                

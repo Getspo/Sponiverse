@@ -95,28 +95,6 @@ public class MainController {
 			// 해당 이벤트 정보 가져오기
 			EventVO event = event_dao.eventByIdx(event_idx);
 			model.addAttribute("event", event);
-			
-			int totaljoiner = event.getEvent_max_joiner();
-			
-			//행사 신청한 유저 전체 수 조회
-			int appliecount = event_dao.applieCount(event_idx);
-			model.addAttribute("appliecount", appliecount);
-			
-		    // 퍼센트 계산
-		    double percent = 0;
-		    if (totaljoiner > 0) {
-		        percent = (double) appliecount / totaljoiner * 100;
-		    }
-		    
-		    // 소수점 자릿수 포맷팅
-		    String percentStr;
-		    if (percent == (int) percent) {
-		        percentStr = String.format("%d", (int) percent); // 정수 형태로
-		    } else {
-		        percentStr = String.format("%.2f", percent); // 소수점 2자리까지
-		    }
-		    
-		    model.addAttribute("percent", percentStr);
 
 			UserVO user = (UserVO) session.getAttribute("user");
 			if (user != null) {
@@ -243,24 +221,26 @@ public class MainController {
 
 		return jsonObject.toString();
 	}
+	
+	// 행사 공지/안내 페이지 이동
+		@RequestMapping("/host_event_notice.do")
+		public String host_event_notice(@RequestParam("event_idx") int event_idx, Model model) {
+			EventVO event = event_dao.eventByIdx(event_idx);
+			model.addAttribute("event", event);
+			return Common.Host.VIEW_PATH + "host_event_notice.jsp";
+		}
+	
+	// 행사 공지/안내 작성 페이지 이동
+	@RequestMapping("/host_event_notice_write.do")
+	public String host_event_notice_write(@RequestParam("event_idx") int event_idx, Model model) {
+		EventVO event = event_dao.eventByIdx(event_idx);
+		model.addAttribute("event", event);
+		return Common.Host.VIEW_PATH + "host_event_notice_write.jsp";
+	}
 
 	// 호스트페이지에서 참가자확인페이지 이동(0703 추가)
 	@RequestMapping("/register_list.do")
-	public String register_list(@RequestParam("event_idx") int event_idx, Model model) {
-		
-		//해당 이벤트 정보 가졍괴
-		EventVO event = event_dao.eventByIdx(event_idx);
-		model.addAttribute("event", event);
-		
-		
-		//신청한 유저 전체 조회
-		List<OrderVO> order = order_dao.orderByIdx(event_idx);
-		model.addAttribute("order", order);
-		
-		//행사 신청한 유저 전체 수 조회
-		int appliecount = event_dao.applieCount(event_idx);
-		model.addAttribute("appliecount", appliecount);
-		
+	public String register_list() {
 		return Common.Host.VIEW_PATH + "host_register_list.jsp";
 	}
 
@@ -279,40 +259,10 @@ public class MainController {
 		return Common.Mypage.VIEW_PATH + "mypage.jsp";
 	}
 
-	// 삭제 후에 보여질 페이지
+	// 탈퇴 후에 보여질 페이지
 	@RequestMapping("withdrawalform.do")
 	public String withdrawalform() {
 		return Common.Mypage.VIEW_PATH + "withdraw_after.jsp";
 	}
-	
-	
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

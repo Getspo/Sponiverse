@@ -159,9 +159,9 @@
                     <span>${event.event_addr}${event.event_addrdetail}</span>
                 </div>
             </section>
-            <br>
-            <hr>
-            <br>
+            
+            <hr><br>
+            
             <section id="content" class="content">
                 <div>${event.event_content}</div>
             </section>
@@ -223,17 +223,19 @@
         <div class="apply_line">
             <div class="apply_box">
                 <div class="apply_category">
-                    <a href="javascript:" onclick="location.href='sports_view.do'" id="sports"><span> <c:choose>
-																							            <c:when test="${event.event_sports_idx == 1}">
-																							                러닝
-																							            </c:when>
-																							            <c:when test="${event.event_sports_idx == 2}">
-																							                철인3종
-																							            </c:when>
-																							            <c:otherwise>
-																							                기타
-																							            </c:otherwise>
-																							        </c:choose></span></a>
+                    <a href="javascript:" onclick="location.href='sports_view.do'" id="sports">
+                    <c:choose>
+                    	<c:when test="${event.event_sports_idx == 1}">
+                    	<span>러닝</span>
+                    	</c:when>
+                    	<c:when test="${event.event_sports_idx == 2}">
+                    	<span>철인3종</span>
+                    	</c:when>
+                    	<c:otherwise>
+				        <span>기타</span>
+				    	</c:otherwise>
+				    </c:choose>	
+                    </a>
                     <a href="javascript:" onclick="location.href='sports_view.do'" id="loc"><span>${event.event_loc}</span></a>
                 </div>
                 <div class="apply_name">
@@ -273,7 +275,7 @@
         <div class="modal_popup">
             <h3>호스트에게 문의하세요!</h3>
             <p>행사와 관련 없거나, 부적합한 내용이 기재되어 있을 경우 관리자에 의해 삭제되거나 차단 될 수 있습니다</p>
-            <textarea id="questionText" rows="4" placeholder="문의 사항이 자세할수록 더욱 정확한 답변을 받으실 수 있습니다. 답변은 이메일로 전송됩니다"></textarea>
+            <textarea id="questionText" rows="4" placeholder="문의 사항이 자세할수록 더욱 정확한 답변을 받으실 수 있습니다."></textarea>
             <button type="button" class="close_btn">닫기</button>
             <button type="button" id="submitQuestion" class="submit_btn">문의하기</button>
         </div>

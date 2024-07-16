@@ -7,10 +7,8 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import vo.EventVO;
 import vo.OrderVO;
 import vo.PayVO;
-import vo.UserVO;
 
 public class OrderDAO {
 	@Autowired
@@ -46,32 +44,5 @@ public class OrderDAO {
 	public List<OrderVO> selectEventByorder(int user_idx) {
 		return sqlSession.selectList("o.user_order_list", user_idx);
 	}
-	
-	//이벤트신청 삭제
-	public int deleteOrder(int order_idx) {
-		return sqlSession.delete("o.user_order_delete", order_idx);
-	}
-	
-	//신청한 행사 유저 조회
-	public List<OrderVO> orderByIdx(int event_idx) {
-		return sqlSession.selectList("o.user_order_event", event_idx); 
-	}
-
-	// 마이페이지에서 행사 리스트 삭제
-	public int cancelEvent(int user_idx, int event_idx) {
-		Map<String, Integer> map = new HashMap<>();
-		map.put("user_idx", user_idx);
-		map.put("event_idx", event_idx);
-		int res = sqlSession.delete("o.cancel_event", map);
-		return res;
-	}
 
 }
-
-
-
-
-
-
-
-
