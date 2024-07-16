@@ -60,11 +60,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{user_idx} AND event_idx
 		= #{event_idx}
 	</select>
-
-	<!-- 마이페이지 참가 행사 목록 - 행사 취소(삭제) -->
+	
+	<!-- 신청이벤트 삭제 -->
+	<delete id="user_order_delete" parameterType="int">
+		delete from getspo_order WHERE order_idx = #{order_idx}
+	</delete>
+	
+	<!-- 행사 신청한 유저 조회 -->
+	<select id="user_order_event" parameterType="int" resultType="order">
+		SELECT * FROM getspo_order where event_idx = #{event_idx}
+	</select>
+  
+  <!-- 마이페이지 참가 행사 목록 - 행사 취소(삭제) -->
 	<delete id="cancel_event" parameterType="java.util.Map">
 		delete from getspo_order
 		WHERE user_idx = #{user_idx}
 			and event_idx = #{event_idx}
 	</delete>
+  
 </mapper>
+

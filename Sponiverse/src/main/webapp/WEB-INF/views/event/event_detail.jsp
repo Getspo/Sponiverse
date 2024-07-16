@@ -223,8 +223,18 @@
         <div class="apply_line">
             <div class="apply_box">
                 <div class="apply_category">
-                    <a href="javascript:" onclick="location.href='sports_view.do'" id="sports"><span>러닝</span></a>
-                    <a href="javascript:" onclick="location.href='sports_view.do'" id="loc"><span>서울</span></a>
+                    <a href="javascript:" onclick="location.href='sports_view.do'" id="sports"><span> <c:choose>
+																							            <c:when test="${event.event_sports_idx == 1}">
+																							                러닝
+																							            </c:when>
+																							            <c:when test="${event.event_sports_idx == 2}">
+																							                철인3종
+																							            </c:when>
+																							            <c:otherwise>
+																							                기타
+																							            </c:otherwise>
+																							        </c:choose></span></a>
+                    <a href="javascript:" onclick="location.href='sports_view.do'" id="loc"><span>${event.event_loc}</span></a>
                 </div>
                 <div class="apply_name">
                     <span>${event.event_name}</span>

@@ -46,6 +46,16 @@ public class OrderDAO {
 	public List<OrderVO> selectEventByorder(int user_idx) {
 		return sqlSession.selectList("o.user_order_list", user_idx);
 	}
+	
+	//이벤트신청 삭제
+	public int deleteOrder(int order_idx) {
+		return sqlSession.delete("o.user_order_delete", order_idx);
+	}
+	
+	//신청한 행사 유저 조회
+	public List<OrderVO> orderByIdx(int event_idx) {
+		return sqlSession.selectList("o.user_order_event", event_idx); 
+	}
 
 	// 마이페이지에서 행사 리스트 삭제
 	public int cancelEvent(int user_idx, int event_idx) {
@@ -57,3 +67,11 @@ public class OrderDAO {
 	}
 
 }
+
+
+
+
+
+
+
+

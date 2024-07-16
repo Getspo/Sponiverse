@@ -38,7 +38,8 @@
 			<li class="menu-item"><a href="#" class="menu-link"
 				data-target="submenu2">참가자관리</a>
 				<ul class="submenu" id="submenu2">
-					<li><a href="#">참가자리스트</a></li>
+					<li><a href="javascript:"
+						onclick="location.href='register_list.do?event_idx=${event.event_idx}'">참가자리스트</a></li>
 					<li><a href="#">결제리스트</a></li>
 					<li><a href="#">받은문의내역</a></li>
 				</ul></li>

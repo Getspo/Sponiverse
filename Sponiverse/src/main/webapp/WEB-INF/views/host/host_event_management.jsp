@@ -102,8 +102,8 @@
 	                    <div class="join_chart">
 	                        <div class="join_chartsub">
 	                            <div>
-	                                <p class="join_chart_count">44<span class="join_chart_count_unit">&nbsp;명</span></p>
-	                                <p class="join_chart_info_percent">모집정원의&nbsp;<span>6%</span></p>
+	                                <p class="join_chart_count">${event.event_max_joiner}<span class="join_chart_count_unit">&nbsp;명</span></p>
+	                                <p class="join_chart_info_percent">모집정원의&nbsp;<span>${percent}%</span></p>
 	                            </div>
 	                            <div class="join_chartgraph">
 	                            <canvas id="myChart" class="myChart"></canvas>
@@ -166,7 +166,7 @@
                 labels: ['전체 참가자 수', '신청한 참가자 수'],
                 datasets: [{
                     label: '참가자 수 비교',
-                    data: [${event.event_max_joiner}, 44], // 데이터: 전체 참가자 수 , 신청한 참가자 수 
+                    data: [${event.event_max_joiner}, ${appliecount}], // 데이터: 전체 참가자 수 , 신청한 참가자 수 
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.2)', // 전체 참가자 수의 배경 색상
                         'rgba(255, 99, 132, 0.2)'  // 내가 신청한 참가자 수의 배경 색상
