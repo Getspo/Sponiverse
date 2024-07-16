@@ -10,27 +10,27 @@
 
 <style>
 * {
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	font-family: "Noto Sans KR", sans-serif;
+   margin: 0;
+   padding: 0;
+   overflow: hidden;
+   font-family: "Noto Sans KR", sans-serif;
 }
 div {
-	background-size: contain;
+   background-size: contain;
 }
 img {
-	width: 100vw;
-	height: 100vh;
+   width: 100vw;
+   height: 100vh;
 }
 </style>
 
 </head>
 
 <body>
-	<div>
-		<a href="main.do">
-			<img src="/getspo/resources/img/sp_withdraw_afterpage-001.png">
-		</a>
-	</div>
+   <div>
+      <a href="main.do">
+         <img src="/getspo/resources/img/회원탈퇴.png">
+      </a>
+   </div>
 </body>
 </html>

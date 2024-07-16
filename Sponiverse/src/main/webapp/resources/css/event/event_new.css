@@ -24,7 +24,6 @@
 }
 
 .form-group h5 {
-	/* font-weight: bold; */
 	font-size: 18px;
 	margin-bottom: 10px;
 }
@@ -113,6 +112,7 @@
 	width: 15px;
 	height: 15px;
 	margin-right: 10px;
+	accent-color: #0099bc;
 }
 
 #entry_group label {
@@ -120,6 +120,7 @@
 	display: flex;
 	align-items: center;
 	margin-top: 3px;
+	cursor: pointer;
 }
 
 #entry_group button {
@@ -167,6 +168,7 @@
 .radio-group input[type="radio"], .radio-group label {
 	display: inline-block;
 	margin-right: 10px;
+	accent-color: #0099bc;
 }
 
 /* 라벨 스타일링 */

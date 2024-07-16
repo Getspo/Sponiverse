@@ -180,12 +180,8 @@ body {
 	color: #878D91;
 }
 
-.user_name, .user_email, .user_tel {
-	padding: 32px;
-}
-
 .user_name input[type="text"], .user_email input[type="email"],
-	.user_tel input[type="tel"] {
+.user_tel input[type="tel"] , .user_age input[type="date"]{
 	width: 80%;
 	margin: 10px 0 0;
 	padding: 14px 12px;
@@ -196,14 +192,14 @@ body {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 입체감을 위한 그림자 추가 */
 }
 
-.apply_info input[type="text"]:focus, .apply_info input[type="tel"]:focus
-	{
+.apply_info input[type="text"]:focus, .apply_info input[type="tel"]:focus,
+.user_age input[type="date"]:focus{
+	outline: none;
 	border: 1px solid #0099bc;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 0 0 2px #0099bc;
-	/* 부드러운 전환 효과를 위한 box-shadow */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 0 0 1px #0099bc;
 }
 
-.user_name, .user_email, .user_tel {
+.user_name, .user_email, .user_tel, .user_age {
 	padding: 20px;
 }
 
@@ -229,31 +225,6 @@ body {
 	padding: 20px; /* 기본 패딩 */
 	border: none; /* 기본 테두리 제거 */
 	box-shadow: none; /* 기본 그림자 제거 */
-}
-
-/* 나이 선택 드롭다운 */
-.user_age {
-	padding: 10px 20px 20px 20px;
-	position: relative;
-}
-
-/* select 요소 스타일 */
-.user_age select {
-	width: 80%;
-	margin: 10px 0 0;
-	padding: 14px 12px;
-	border-radius: 4px;
-	border: 1px solid #ccc;
-	outline: none;
-	transition: box-shadow 0.2s ease, border 0.2s ease;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-	appearance: none;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	background: #fff
-		url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path fill="none" stroke="%23333" stroke-width="1.5" d="M1 1l4 4 4-4"/></svg>')
-		no-repeat right 10px center;
-	background-size: 10px;
 }
 
 /******************************************************/

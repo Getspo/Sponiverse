@@ -135,13 +135,9 @@
                 } else if (order_idx !== "no") {
                     mypayment(order_idx);
                 } else {
-                	console.error("주문 처리 실패: 4");
-                	orderDelete(order_idx);  // 주문 삭제 함수 호출
                     alert("주문 처리에 실패했습니다.");
                 }
             } else if (xhr.readyState == 4) {
-            	console.error("주문 처리 실패: 5");
-            	orderDelete(order_idx);  // 주문 삭제 함수 호출
                 alert("주문 처리에 실패했습니다.");
             }
         }
@@ -172,8 +168,6 @@
                     console.log("Sending payment data to payment.do:", data);
                     sendRequest("payment.do", new URLSearchParams(data).toString(), paymentResultFn, "POST");
                 } else {
-                	console.error("주문 처리 실패: 1");
-                	orderDelete(order_idx);  // 주문 삭제 함수 호출
                     alert("결제에 실패했습니다. 다시 시도해 주세요.");
                 }
             });
@@ -184,24 +178,14 @@
                 const response = xhr.responseText;
                 console.log("payment.do 응답 데이터:", response);
                 if (response === "success") {
-                    location.href = "mypageform.do";
                     alert("결제가 완료되었습니다.");
+                    location.href = "mypageform.do?user_idx=${user.user_idx}";
                 } else {
-                	console.error("주문 처리 실패: 2");
-                	orderDelete(order_idx);  // 주문 삭제 함수 호출
                     alert("else 결제 처리에 실패했습니다. 관리자에게 문의하세요.");
                 }
             } else if (xhr.readyState == 4) {
-            	console.error("주문 처리 실패: 3");
-            	orderDelete(order_idx);  // 주문 삭제 함수 호출
                 alert("xhr==4 결제 처리에 실패했습니다. 관리자에게 문의하세요.");
             }
-        }
-        
-        //주문삭제함수
-        function orderDelete(order_idx) {
-            console.log("Deleting order with order_idx:", order_idx);
-            location.href = "orderdelete.do?order_idx=" + order_idx;
         }
     </script>
 </head>
@@ -284,6 +268,12 @@
                         <input type="tel" id="tel" name="order_tel" value="${user.user_tel}" required>
                     </div>
                     
+                    <!-- 생년월일 선택 드롭다운 -->
+                    <div class="user_age">
+                        <p id="age">생년월일 <span>*</span></p>
+                        <input type="date" id="user_birth" name="user_birth" value="${user.user_birth}" required>
+                    </div>
+                    
                     <!-- 성별 선택 체크박스 -->
                     <div class="user_gender">
                         <p id="gender">성별 <span>*</span></p>
@@ -291,18 +281,8 @@
                         <label><input type="radio" id="order_gen" name="order_gen" value="female" required> 여성</label>
                     </div>
                 
-                    <!-- 나이 선택 드롭다운 -->
-                    <div class="user_age">
-                        <p id="age">나이 <span>*</span></p>
-                        <select id="age" name="order_age" required>
-                            <option value="">선택하세요</option>
-                            <c:forEach var="i" begin="14" end="100">
-                                <option value="${i}">${i}세</option>
-                            </c:forEach>
-                        </select>
-                    </div>
                 </div>
-            </div>
+            </div>        
             
             <div class="apply_line">
                 <div class="apply_box">

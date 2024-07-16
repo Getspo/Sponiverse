@@ -3,18 +3,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.kh</groupId>
-	<artifactId>getspo</artifactId>
-	<name>Getspo</name>
+	<artifactId>Sponiverse</artifactId>
+	<name>getspo</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<version>1.0.0-BUILD-SNAPSHOT</version>  
 	<properties>
 		<java-version>1.6</java-version>
 		<org.springframework-version>4.0.0.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
-	</properties>
-	<dependencies>
-		<!-- Spring -->   
+	</properties>  
+	<dependencies>  
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>

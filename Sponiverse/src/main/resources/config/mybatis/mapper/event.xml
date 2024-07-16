@@ -47,14 +47,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM (
 		SELECT * FROM getspo_event
 		<trim prefix="WHERE" prefixOverrides="OR|AND">
-			<if test="event_loc_list != null">
-                    <foreach item="location" collection="event_loc_list" open="(" separator="OR" close=")">
-                        event_loc LIKE '%' || #{location} || '%'
-                    </foreach>
-            </if>
-            <if test="event_sports_idx != null">
-            	AND event_sports_idx = #{event_sports_idx}
-       		</if>
+			<if test="event_loc != null">
+				event_loc LIKE '%' || #{event_loc} || '%'
+			</if>
 			<if test="event_name != null">
 				OR event_name LIKE '%' || #{event_name} || '%'
 			</if>
@@ -84,14 +79,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="java.util.Map">
 		SELECT COUNT(*) FROM getspo_event
 		<trim prefix="WHERE" prefixOverrides="OR|AND">
-			<if test="event_loc_list != null">
-                    <foreach item="location" collection="event_loc_list" open="(" separator="OR" close=")">
-                        event_loc LIKE '%' || #{location} || '%'
-                    </foreach>
-            </if>
-            <if test="event_sports_idx != null">
-            	AND event_sports_idx = #{event_sports_idx}
-       		</if>
+			<if test="event_loc != null">
+				event_loc LIKE '%' || #{event_loc} || '%'
+			</if>
 			<if test="event_name != null">
 				OR event_name LIKE '%' || #{event_name} || '%'
 			</if>
@@ -165,9 +155,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY event_h_start ASC
 	</select>
 
-	<!-- 호스트센터 행사 목록 - 행사 삭제 -->
-	<delete id="delete_event" parameterType="int">
-		delete from getspo_event
-		where event_idx = #{event_idx}
-	</delete>
+
 </mapper>
