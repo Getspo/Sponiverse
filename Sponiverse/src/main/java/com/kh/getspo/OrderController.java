@@ -59,6 +59,7 @@ public class OrderController {
 
       }
       
+      //결제전에 이벤트 신청
       @RequestMapping(value = "/order.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
       @ResponseBody
       public String orderEvent(OrderVO order) {
@@ -87,7 +88,8 @@ public class OrderController {
           }
           return result;
       }
-
+      
+      //결제내역
       @RequestMapping(value = "/payment.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
       @ResponseBody
       public String processPayment(
@@ -115,6 +117,18 @@ public class OrderController {
               System.out.println("Payment Processing Failed: " + e.getMessage()); // 추가된 로그
               return "fail";
           }
+      }
+      
+      //신청내역 삭제
+      @RequestMapping("/orderdelete.do")
+      public String orderdelete(@RequestParam("order_idx") int order_idx) {
+    	  int res = order_dao.deleteOrder(order_idx);
+    	    	 
+    	  // 리퍼러 URL 가져오기
+    	   String referer = request.getHeader("Referer");
+    	    
+    	  // 현재 페이지로 리다이렉트
+    	   return "redirect:" + referer;
       }
 
 

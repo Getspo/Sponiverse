@@ -135,9 +135,13 @@
                 } else if (order_idx !== "no") {
                     mypayment(order_idx);
                 } else {
+                	console.error("주문 처리 실패: 4");
+                	orderDelete(order_idx);  // 주문 삭제 함수 호출
                     alert("주문 처리에 실패했습니다.");
                 }
             } else if (xhr.readyState == 4) {
+            	console.error("주문 처리 실패: 5");
+            	orderDelete(order_idx);  // 주문 삭제 함수 호출
                 alert("주문 처리에 실패했습니다.");
             }
         }
@@ -168,6 +172,8 @@
                     console.log("Sending payment data to payment.do:", data);
                     sendRequest("payment.do", new URLSearchParams(data).toString(), paymentResultFn, "POST");
                 } else {
+                	console.error("주문 처리 실패: 1");
+                	orderDelete(order_idx);  // 주문 삭제 함수 호출
                     alert("결제에 실패했습니다. 다시 시도해 주세요.");
                 }
             });
@@ -178,14 +184,24 @@
                 const response = xhr.responseText;
                 console.log("payment.do 응답 데이터:", response);
                 if (response === "success") {
+                    location.href = "mypageform.do";
                     alert("결제가 완료되었습니다.");
-                    location.href = "mypageform.do?user_idx=${user.user_idx}";
                 } else {
+                	console.error("주문 처리 실패: 2");
+                	orderDelete(order_idx);  // 주문 삭제 함수 호출
                     alert("else 결제 처리에 실패했습니다. 관리자에게 문의하세요.");
                 }
             } else if (xhr.readyState == 4) {
+            	console.error("주문 처리 실패: 3");
+            	orderDelete(order_idx);  // 주문 삭제 함수 호출
                 alert("xhr==4 결제 처리에 실패했습니다. 관리자에게 문의하세요.");
             }
+        }
+        
+        //주문삭제함수
+        function orderDelete(order_idx) {
+            console.log("Deleting order with order_idx:", order_idx);
+            location.href = "orderdelete.do?order_idx=" + order_idx;
         }
     </script>
 </head>
