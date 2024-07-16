@@ -3,151 +3,190 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>행사 관리</title>
-		
-		<!-- css -->
+   <head>
+      <meta charset="UTF-8">
+      <title>행사 관리</title>
+      
+      <!-- css -->
         <link rel="stylesheet" href="/getspo/resources/css/host/host_event_management.css">
         
         <!-- js -->
         <!-- <script src="/getspo/resources/js/host_event_management.js"></script> -->
-		
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                
-	</head>
-	<body>
-		<jsp:include page="host_event_navigation.jsp"/>
-		<jsp:include page="host_sidebar.jsp"/>
-		
-		<div class="row channel-list-row">
-		    <div class="col s12 justify-content-between">
-		        <div class="d-flex justify-content-between align-items-center">
-		            <div class="d-flex">
-		                <div class="selectbox">
-		                    <select class="browser-default d-inline-block" style="width: 150px;">
-		                        <option value="all">전체</option>
-		                        <option value="add">참가확정자</option>
-		                        <option value="payattend">참가대기자</option>
-		                        <option value="outstanding">미결제자</option>
-		                    </select>
-		                </div>
-		                <div class="selectbox mx-16px">
-		                    <select class="browser-default d-inline-block" style="width: 150px;">
-		                        <option value="all">전체</option>
-		                        <option value="true">출석</option>
-		                        <option value="false">출석안함</option>
-		                    </select>
-		                </div>
-		                <div class="selectbox" style="width: 200px;">
-		                    <select class="browser-default d-inline-block">
-		                        <option value="all">티켓 정보</option>
-		                        <option value="Group1">개인</option>
-		                        <option value="Group2">릴레이</option>
-		                    </select>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		    <div class="col s12 mt-3">
-		        <div class="align-items-center">
-		            <div class="d-flex justify-content-between align-items-center">
-		                <div>
-		                    <label>신청인원: 44명</label> / 
-		                    <label> 신청 티켓 수: 44개</label> / 
-		                    <label>모집 정원: 700명</label>
-		                </div>
-		                <div>
-		                    <div class="d-flex align-items-center">
-		                        <a class="eventus-btn eventus-btn-w p-2 mr-2" style="border: none;">QR출석/명찰출력</a>
-		                        <a class="eventus-btn eventus-btn-w p-2 mr-2" style="border: none;">다운로드</a>
-		                        <div class="position-relative d-inline-block">
-		                            <a class="eventus-btn eventus-btn-w p-2 dropDown" style="border: none;">+ 추가/업로드 <i class="mdi-hardware-keyboard-arrow-down dropDown"></i></a>
-		                            <div id="e-dropdown-data" class="position-absolute d-none e-dropdown-content">
-		                                <a class="d-block w-100" style="padding: 10px 16px;">참가자 추가하기</a>
-		                                <a class="d-block w-100 modal-trigger" style="padding: 10px 16px; z-index: 1005;">엑셀 업로드</a>
-		                            </div>
-		                        </div>
-		                        <div class="ml-10px" style="position: relative;">
-		                            <input placeholder="참가자 검색" class="eventus-input" style="width: 200px; height: 40px;">
-		                            <button class="eventus-search_button"><i class="mdi-action-search"></i></button>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		    <div class="col s12 mt-3" style="background: rgb(248, 250, 251);">
-		        <div class="py-3 font-weight-bold">
-		            <div class="row">
-		                <div class="col s2"><span>신청자 정보</span></div>
-		                <div class="col s5 px-0">
-		                    <span class="d-inline-block" style="width: 40%;">신청 티켓</span>
-		                    <span class="d-inline-block px-10px" style="width: 30%;">결제</span>
-		                    <span class="d-inline-block px-10px">상태</span>
-		                </div>
-		                <div class="col s1"></div>
-		                <div class="col s2"></div>
-		                <div class="col s2"></div>
-		            </div>
-		        </div>
-		    </div>
-		    <div class="col s12 txt-15">
-		        <div class="row">
-		            <div class="col s2">
-		                <div class="py-3">
-		                    <div>
-		                        <div class="font-weight-700">전성현</div>
-		                        <div title="efging6875@naver.com" style="word-break: break-all;">ef********@naver.com</div>
-		                        <div title="01051761549">010****1549</div>
-		                        <div>개인코드 : <span>Ej2v2D</span></div>
-		                        <div class="mt-4px" style="display: none;">
-		                            <a class="d-inline-block text-underline">사전 설문</a>
-		                        </div>
-		                        <div class="mt-10px">신청일 : 24년06월06일</div>
-		                    </div>
-		                </div>
-		            </div>
-		            <div class="col s5">
-		                <div class="row attendee-border-bottom">
-		                    <div class="py-3" style="width: 40%;"><span class="d-inline-block">개인</span>
-		                        <div class="mt-2 mr-10px d-flex justify-content-between"><span>1개</span></div>
-		                    </div>
-		                    <div class="px-10px py-3" style="width: 30%;">
-		                        <div class="mb-10px">110,000원</div>
-		                        <p>
-		                            <span style="font-size: 12px;">결제완료/신용카드</span> <br>
-		                            <span style="font-size: 12px;">2024-06-06 오후 6:46:10</span>
-		                        </p>
-		                    </div>
-		                    <div class="px-10px py-3" style="width: 30%;">
-		                        <div><span style="color: rgb(141, 113, 221);">참가확정</span></div>
-		                        <span class="d-inline-block txt-12 mt-10px" style="border: 1px solid rgb(228, 228, 228); cursor: pointer; border-radius: 6px; padding: 4px 6px; background-color: white;">상태변경</span>
-		                    </div>
-		                </div>
-		            </div>
-		            <div class="col s1 py-3 position-relative" style="display: inline-block;">
-		                <div>
-		                    <span class="mr-16px">
-		                        <input type="checkbox" id="allAttend0" class="filled-in">
-		                        <label for="allAttend0">출석</label>
-		                    </span>
-		                </div>
-		            </div>
-		            <div class="col s2 py-3"><span style="word-break: break-all;"></span></div>
-		            <div class="col s2 py-3 position-relative text-right">
-		                <span>
-		                    <input type="checkbox" id="cancelLockCheckbox0" class="filled-in">
-		                    <label for="cancelLockCheckbox0">참가자 취소 잠금 설정</label>
-		                </span>
-		                <div class="mt-10px">
-		                    <span class="text-center mr-10px" style="display: none;"><a download="">파일 다운로드</a></span>
-		                    <a class="d-inline-block">메모</a>
-		                    <a href="#editModal" class="modal-trigger ml-10px" style="color: rgb(58, 132, 232); z-index: 1007;">수정</a>
-		                    <a href="#PaymentCancelModal" class="modal-trigger ml-10px" style="color: rgb(191, 69, 69); z-index: 1009;">취소/환불</a>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-	</body>
+      
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>                
+   </head>
+   <body>
+   <jsp:include page="host_event_navigation.jsp"/>
+   <jsp:include page="host_sidebar.jsp"/>
+   
+   <article id="event_info_section" class="event_info_section">
+       <div class="event_info_img_wrapper">
+           <div class="event_info_img">
+               <img src="/getspo/resources/upload/${event.event_thumbnail}" alt="Event Image">
+           </div>
+           <div class="event_info_dday">
+               <canvas id="canvas" class="confetti" width="238" height="123" style="display: none;"></canvas>
+               <div class="dday_wrapper">
+                   <p class="dday">D+20</p>
+               </div>
+           </div>
+       </div>
+       <div class="event_info_wrapper">
+           <div class="category">
+               <c:choose>
+                <c:when test="${event.event_sports_idx == 1}">
+                    <p>러닝</p>
+                </c:when>
+                <c:when test="${event.event_sports_idx == 2}">
+                    <p>철인3종</p>
+                </c:when>
+                <c:otherwise>
+                    <p>기타</p>
+                </c:otherwise>
+            </c:choose>
+               <span class="wall">|</span>
+               <p>${event.event_loc}</p>
+           </div>
+           <div class="edit_icon_box">
+               <div class="edit_icon_wrapper">
+                   <div class="edit_icon" onclick="toggleMenu();">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" color="#878d91" viewBox="0 0 20 20" fill="currentColor">
+                           <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+                       </svg>
+                   </div>
+                   <div class="edit_menu_box">
+                       <!-- <a onclick="eventCopy()" class="event_copy">행사 복제</a> -->
+                       <a class="event_delete">행사 삭제</a>
+                   </div>
+               </div>
+           </div>
+           <div  class="event_info">
+               <a class="title-link" href="event_detail.do?event_idx=${event.event_idx}">
+                  (행사번호 : ${event.event_idx}) ${event.event_name}
+               </a>
+           </div>
+           <div class="detail_info">
+               <p class="detail_title">일시</p>
+               <p class="detail_info_data">${event.getFormattedEventHStart()} ~ ${event.getFormattedEventHEnd() }</p>
+           </div>
+           <div class="detail_info">
+               <p class="detail_title">장소</p>
+               <p class="detail_info_data">${event.event_addr}${event.event_addrdetail}</p>
+           </div>
+           <div class="detail_info">
+               <p class="detail_title">링크</p>
+               <p id="event-url" class="detail_info_data">http://localhost:9090/getspo/event_detail.do?event_idx=${event.event_idx}</p>
+               <div class="clipboard_btn">
+                   <a data-clipboard-target="#event_url" href="#urlModal" class="copy_url">URL 복사</a>
+               </div>
+           </div>
+       </div>
+   </article>
+   
+   <!-- 모집 -->   
+   <article class="event_info_section2">
+       <div class="title_box">
+           <p class="subtitle">모집</p>
+           <div class="direct_btn_wrapper">
+               <a href="#" target="_self" class="direct_btn">참가자리스트 바로가기</a>
+               <span class="chevron-right"></span>
+           </div>
+       </div>
+       <div class="info_box1" style="display: inline-block; width: 100%;">
+           <div class="row">
+               <div class="join_box">
+                   <div class="join_box_sub">
+                       <div class="card_title_wrapper">
+                           <p class="card_name">참가 신청</p>
+                       </div>
+                       <div class="join_chart">
+                           <div class="join_chartsub">
+                               <div>
+                                   <p class="join_chart_count">44<span class="join_chart_count_unit">&nbsp;명</span></p>
+                                   <p class="join_chart_info_percent">모집정원의&nbsp;<span>6%</span></p>
+                               </div>
+                               <div class="join_chartgraph">
+                               <canvas id="myChart" class="myChart"></canvas>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="join_box_2">
+                   <div class="join_box_sub2">
+                       <div class="join_cancle">
+                           <p class="card_name">취소</p>
+                           <p class="join_chart_count">7<span class="join_chart_count_unit">&nbsp;명</span></p>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </article>
+   
+   <script>
+   // 메뉴 토글 함수
+    function toggleMenu() {
+        var menuBox = document.querySelector('.edit_menu_box');
+        if (menuBox.style.display === 'none' || menuBox.style.display === '') {
+            menuBox.style.display = 'block';
+            // 메뉴가 열릴 때, 문서 전체에 클릭 이벤트 리스너 추가
+            document.addEventListener('click', closeMenuOnClickOutside);
+        } else {
+            menuBox.style.display = 'none';
+            // 메뉴가 닫힐 때, 문서 전체에 클릭 이벤트 리스너 제거
+            document.removeEventListener('click', closeMenuOnClickOutside);
+        }
+    }
+
+    // 메뉴 외부 클릭 시 메뉴를 닫는 함수
+    function closeMenuOnClickOutside(event) {
+        var menuBox = document.querySelector('.edit_menu_box');
+        var editIcon = document.querySelector('.edit_icon');
+        // 클릭한 요소가 메뉴 또는 메뉴 아이콘이 아닌 경우
+        if (!menuBox.contains(event.target) && !editIcon.contains(event.target)) {
+            menuBox.style.display = 'none';
+            document.removeEventListener('click', closeMenuOnClickOutside);
+        }
+    }
+
+    // 메뉴 아이콘 클릭 시 메뉴 토글
+    document.querySelector('.edit_icon').addEventListener('click', function(event) {
+        // 이벤트 버블링을 막아 메뉴가 바로 닫히지 않도록 함
+        event.stopPropagation();
+        toggleMenu();
+    });
+
+    // 차트 생성 코드
+     window.onload = function() {
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut', // 도넛 차트
+            data: {
+                labels: ['전체 참가자 수', '신청한 참가자 수'],
+                datasets: [{
+                    label: '참가자 수 비교',
+                    data: [${event.event_max_joiner}, 44], // 데이터: 전체 참가자 수 , 신청한 참가자 수 
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)', // 전체 참가자 수의 배경 색상
+                        'rgba(255, 99, 132, 0.2)'  // 내가 신청한 참가자 수의 배경 색상
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)', // 전체 참가자 수의 테두리 색상
+                        'rgba(255, 99, 132, 1)'  // 내가 신청한 참가자 수의 테두리 색상
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false // 이 옵션을 추가하여 비율을 유지하지 않도록 설정
+            }
+        });
+    }
+   </script>
+   
+      
+   
+   </body>
 </html>

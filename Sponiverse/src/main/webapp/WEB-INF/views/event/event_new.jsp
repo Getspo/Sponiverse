@@ -6,34 +6,34 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>이벤트 개설하기</title>
 
-		<!-- css -->
-		<link rel="stylesheet" href="/getspo/resources/css/event/event_new.css">
-	
-		<!-- 폰트 설정 -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-	
-		<!-- 주소 찾기 -->
-		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		<script src="/getspo/resources/js/eventaddr.js"></script>
-		
-		<!-- 에디터 -->
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-		
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-		
-		<!-- include summernote css/js -->
-		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"	rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-		
-		<!-- Cropper.js -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
-		<script	src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-			
-		<!-- ajax -->
-		<script src="/getspo/resources/js/httpRequest.js"></script>
+      <!-- css -->
+      <link rel="stylesheet" href="/getspo/resources/css/event/event_new.css">
+   
+      <!-- 폰트 설정 -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+   
+      <!-- 주소 찾기 -->
+      <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+      <script src="/getspo/resources/js/eventaddr.js"></script>
+      
+      <!-- 에디터 -->
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      
+      <!-- include summernote css/js -->
+      <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"   rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+      
+      <!-- Cropper.js -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+      <script   src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+         
+      <!-- ajax -->
+      <script src="/getspo/resources/js/httpRequest.js"></script>
 
 </head>
    
@@ -144,7 +144,7 @@
               <br>
               <h5>행사 정보</h5>
               <div id="summernote">
-              	<textarea id="summernote_content" name="event_content" style="display:none;"></textarea>
+                 <textarea id="summernote_content" name="event_content" style="display:none;"></textarea>
               </div>
           </div>
 
@@ -173,7 +173,7 @@
          
             <div class="form-group" id="entry_group">
                <h5>참가자 정보 수집
-               		<input type="button" class="add-item-btn" onclick="addNewItem()" value="새 항목 추가">
+                     <input type="button" class="add-item-btn" onclick="addNewItem()" value="새 항목 추가">
                </h5>
                    <span>
                       <input id="entry_name" name="user_name" type="checkbox" value="이름" checked disabled>
@@ -253,118 +253,118 @@
        
     <script>
             /* 상세정보 입력창 관련 함수 */
-			$(document).ready(function () {
-			    $('#summernote').summernote({
-			        codeviewFilter: false, // 코드 보기 필터 비활성화
-			        codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
-			        height: 500, // 에디터 높이
-			        minHeight: null, // 최소 높이
-			        maxHeight: null, // 최대 높이
-			        focus: false, // 에디터 로딩 후 포커스 설정
-			        lang: 'ko-KR', // 언어 설정 (한국어)
-			        toolbar: [
-			            ['style', ['style']], // 글자 스타일 설정 옵션
-			            ['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
-			            ['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
-			            ['color', ['color']], // 글자 색상 설정 옵션
-			            ['table', ['table']], // 테이블 삽입 옵션
-			            ['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
-			            ['height', ['height']], // 에디터 높이 조절 옵션
-			            ['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
-			            ['view', ['codeview', 'fullscreen', 'help']], // 코드 보기, 전체 화면, 도움말 옵션
-			        ],
-			        fontSizes: [
-			            '8', '9', '10', '11', '12', '14', '16', '18',
-			            '20', '22', '24', '28', '30', '36', '50', '72',
-			        ], // 글꼴 크기 옵션
-			        styleTags: [
-			            'p',  // 일반 문단 스타일 옵션
-			            {
-			                title: 'Blockquote',
-			                tag: 'blockquote',
-			                className: 'blockquote',
-			                value: 'blockquote',
-			            },  // 인용구 스타일 옵션
-			            'pre',  // 코드 단락 스타일 옵션
-			            {
-			                title: 'code_light',
-			                tag: 'pre',
-			                className: 'code_light',
-			                value: 'pre',
-			            },  // 밝은 코드 스타일 옵션
-			            {
-			                title: 'code_dark',
-			                tag: 'pre',
-			                className: 'code_dark',
-			                value: 'pre',
-			            },  // 어두운 코드 스타일 옵션
-			            'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
-			        ],
-			        callbacks: {
-			            onImageUpload: function (files, editor, welEditable) {
-			                // 파일 업로드 (다중 업로드를 위해 반복문 사용)
-			                for (var i = files.length - 1; i >= 0; i--) {
-			                    uploadSummernoteImageFile(files[i], this);
-			                }
-			            },
-			        },
-			    });
-			
-			    // 폼 제출 이벤트 핸들러
-			    $('.new_event_form').on('submit', function() {
-			        // Summernote 내용 가져오기
-			        var content = $('#summernote').summernote('code');
-			        // textarea에 내용 설정
-			        $('#summernote_content').val(content);
-			    });
-			});
-			
-			function uploadSummernoteImageFile(file, el) {
-			    var data = new FormData();
-			    data.append("file", file);
+         $(document).ready(function () {
+             $('#summernote').summernote({
+                 codeviewFilter: false, // 코드 보기 필터 비활성화
+                 codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
+                 height: 500, // 에디터 높이
+                 minHeight: null, // 최소 높이
+                 maxHeight: null, // 최대 높이
+                 focus: false, // 에디터 로딩 후 포커스 설정
+                 lang: 'ko-KR', // 언어 설정 (한국어)
+                 toolbar: [
+                     ['style', ['style']], // 글자 스타일 설정 옵션
+                     ['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
+                     ['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
+                     ['color', ['color']], // 글자 색상 설정 옵션
+                     ['table', ['table']], // 테이블 삽입 옵션
+                     ['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
+                     ['height', ['height']], // 에디터 높이 조절 옵션
+                     ['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
+                     ['view', ['codeview', 'fullscreen', 'help']], // 코드 보기, 전체 화면, 도움말 옵션
+                 ],
+                 fontSizes: [
+                     '8', '9', '10', '11', '12', '14', '16', '18',
+                     '20', '22', '24', '28', '30', '36', '50', '72',
+                 ], // 글꼴 크기 옵션
+                 styleTags: [
+                     'p',  // 일반 문단 스타일 옵션
+                     {
+                         title: 'Blockquote',
+                         tag: 'blockquote',
+                         className: 'blockquote',
+                         value: 'blockquote',
+                     },  // 인용구 스타일 옵션
+                     'pre',  // 코드 단락 스타일 옵션
+                     {
+                         title: 'code_light',
+                         tag: 'pre',
+                         className: 'code_light',
+                         value: 'pre',
+                     },  // 밝은 코드 스타일 옵션
+                     {
+                         title: 'code_dark',
+                         tag: 'pre',
+                         className: 'code_dark',
+                         value: 'pre',
+                     },  // 어두운 코드 스타일 옵션
+                     'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
+                 ],
+                 callbacks: {
+                     onImageUpload: function (files, editor, welEditable) {
+                         // 파일 업로드 (다중 업로드를 위해 반복문 사용)
+                         for (var i = files.length - 1; i >= 0; i--) {
+                             uploadSummernoteImageFile(files[i], this);
+                         }
+                     },
+                 },
+             });
+         
+             // 폼 제출 이벤트 핸들러
+             $('.new_event_form').on('submit', function() {
+                 // Summernote 내용 가져오기
+                 var content = $('#summernote').summernote('code');
+                 // textarea에 내용 설정
+                 $('#summernote_content').val(content);
+             });
+         });
+         
+         function uploadSummernoteImageFile(file, el) {
+             var data = new FormData();
+             data.append("file", file);
 
-			    // 콘솔에 FormData 출력 (디버깅용)
-			    for (var pair of data.entries()) {
-			        console.log(pair[0]+ ', ' + pair[1]);
-			    }
+             // 콘솔에 FormData 출력 (디버깅용)
+             for (var pair of data.entries()) {
+                 console.log(pair[0]+ ', ' + pair[1]);
+             }
 
-			    $.ajax({
-			        data: data,
-			        type: "POST",
-			        url: "uploadSummernoteImageFile",
-			        contentType: false,
-			        enctype: 'multipart/form-data',
-			        processData: false,
-			        success: function(data) {
-			            console.log("서버 응답:", data);
-			            try {
-			                var jsonResponse;
-			                if (typeof data === "string") {
-			                    jsonResponse = JSON.parse(data);
-			                } else {
-			                    jsonResponse = data;
-			                }
+             $.ajax({
+                 data: data,
+                 type: "POST",
+                 url: "uploadSummernoteImageFile",
+                 contentType: false,
+                 enctype: 'multipart/form-data',
+                 processData: false,
+                 success: function(data) {
+                     console.log("서버 응답:", data);
+                     try {
+                         var jsonResponse;
+                         if (typeof data === "string") {
+                             jsonResponse = JSON.parse(data);
+                         } else {
+                             jsonResponse = data;
+                         }
 
-			                if (jsonResponse.responseCode === "success") {
-			                    var imageUrl = jsonResponse.url;
-			                    $(el).summernote('insertImage', imageUrl, function ($image) {
-			                        $image.css('width', '100%');
-			                    });
-			                } else {
-			                    alert("이미지 업로드에 실패했습니다.");
-			                }
-			            } catch (e) {
-			                console.error("JSON 파싱 오류:", e);
-			                alert("서버 응답을 처리하는 중 오류가 발생했습니다.");
-			            }
-			        },
-			        error: function(jqXHR, textStatus, errorThrown) {
-			            console.error("AJAX 오류:", textStatus, errorThrown);
-			            console.error("서버 응답:", jqXHR.responseText);
-			            alert("이미지 업로드 중 오류가 발생했습니다.");
-			        }
-			    });
-			}
+                         if (jsonResponse.responseCode === "success") {
+                             var imageUrl = jsonResponse.url;
+                             $(el).summernote('insertImage', imageUrl, function ($image) {
+                                 $image.css('width', '100%');
+                             });
+                         } else {
+                             alert("이미지 업로드에 실패했습니다.");
+                         }
+                     } catch (e) {
+                         console.error("JSON 파싱 오류:", e);
+                         alert("서버 응답을 처리하는 중 오류가 발생했습니다.");
+                     }
+                 },
+                 error: function(jqXHR, textStatus, errorThrown) {
+                     console.error("AJAX 오류:", textStatus, errorThrown);
+                     console.error("서버 응답:", jqXHR.responseText);
+                     alert("이미지 업로드 중 오류가 발생했습니다.");
+                 }
+             });
+         }
       
             /* 결제방식에 따른 티켓 금액 입력창 활성화/비활성화 함수 */
                document.addEventListener('DOMContentLoaded', function() {
@@ -510,19 +510,19 @@
                    const applyStartDate = new Date(document.getElementById('apply_start_date').value);
                    const applyEndDate = new Date(document.getElementById('apply_end_date').value);
                    const contactTel = document.getElementById('contact_tel').value;
-				   
+               
                    let valid = true;
-               	   
+                     
                    if (startDate && endDate && endDate < startDate) {
-                	   endDateWarning.textContent = "행사 종료 날짜는 시작 날짜 이후여야 합니다";
-                	   valid = false;
+                      endDateWarning.textContent = "행사 종료 날짜는 시작 날짜 이후여야 합니다";
+                      valid = false;
                    }else {
                        endDateWarning.textContent = "";
                    }
 
                    if (applyStartDate && applyEndDate && applyEndDate < applyStartDate) {
-                	   applyEndDateWarning.textContent = "모집 종료 날짜는 시작 날짜 이후여야 합니다";
-                	   valid = false;
+                      applyEndDateWarning.textContent = "모집 종료 날짜는 시작 날짜 이후여야 합니다";
+                      valid = false;
                    }else {
                        applyEndDateWarning.textContent = "";
                    }
@@ -531,13 +531,13 @@
                        totalWarning.textContent = "모집 날짜는 행사 시작 날짜 이전이어야 합니다";
                        valid = false;
                    } else {
-                	   totalWarning.textContent = "";
+                      totalWarning.textContent = "";
                    }
                    
                    let telpattern = /^\d{3}-\d{4}-\d{4}$/;
                    if (!telpattern.test(contactTel)) {
-                	   contactTelWarning.textContent = "올바른 전화번호를 입력하세요";
-                	   valid = false;
+                      contactTelWarning.textContent = "올바른 전화번호를 입력하세요";
+                      valid = false;
                    } else {
                        contactTelWarning.textContent = "";
                        console.log("올바른 전화번호");
@@ -548,7 +548,7 @@
                    
                });
                
-                         	
+                            
                /* 삭제 버튼 보류
                   function deleteThumbnail() {
                    var thumbnailImageInput = document.getElementById('thumbnail_image');

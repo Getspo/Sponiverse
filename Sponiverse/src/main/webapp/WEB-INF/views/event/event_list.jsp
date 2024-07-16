@@ -15,6 +15,33 @@
 <script src="/getspo/resources/js/httpRequest.js"></script>
 
 <script>
+	function goToPage(pageNumber) {
+		var form = document.getElementById('pagingForm');
+		form.page.value = pageNumber;
+		form.submit();
+	}
+
+	// 필터링 기능 구현
+	function filterEvents() {
+		var location = document.getElementById('location').value;
+		var sports = [];
+		if (document.getElementById('running').checked) {
+			sports.push('running');
+		}
+		if (document.getElementById('triathlon').checked) {
+			sports.push('triathlon');
+		}
+
+		let url = "event_list.do";
+		let param = "event_loc=" + location;
+		sendRequest(url, param, resultFn, "post");
+	}
+	function resultFn() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			let data = xhr.responseText;
+
+		}
+	}
 	//종목 선택시
 	document.addEventListener('DOMContentLoaded', function() {
 		const running = document.querySelector('#running');

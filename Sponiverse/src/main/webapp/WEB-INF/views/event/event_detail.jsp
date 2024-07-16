@@ -14,8 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     
     <script>
-    	//메뉴바 이동
-    	document.addEventListener("DOMContentLoaded", function() {
+       //메뉴바 이동
+       document.addEventListener("DOMContentLoaded", function() {
         const buttons = document.querySelectorAll(".button_bar button");
 
         buttons.forEach(button => {
@@ -51,46 +51,46 @@
 
         // 문의하기 버튼 클릭 시
         submitBtn.addEventListener('click', function() {
-	            const question = questionText.value.trim();
-	            if (question !== '') {
-	                // AJAX를 이용하여 서버에 문의 내용 전송
-	                const xhr = new XMLHttpRequest();
-	                xhr.open('POST', '/your-server-endpoint', true);
-	                xhr.setRequestHeader('Content-Type', 'application/json');
-	                xhr.onreadystatechange = function() {
-	                    if (xhr.readyState === XMLHttpRequest.DONE) {
-	                        if (xhr.status === 200) {
-	                            alert('문의가 접수되었습니다.');
-	                            modal.style.display = 'none';
-	                        } else {
-	                            alert('문의 접수 중 오류가 발생했습니다.');
-	                        }
-	                    }
-	                };
-	                const data = JSON.stringify({ question: question });
-	                xhr.send(data);
-	            } else {
-	                alert('문의 내용을 입력해주세요.');
-	            }
-	        });
-	    });
+               const question = questionText.value.trim();
+               if (question !== '') {
+                   // AJAX를 이용하여 서버에 문의 내용 전송
+                   const xhr = new XMLHttpRequest();
+                   xhr.open('POST', '/your-server-endpoint', true);
+                   xhr.setRequestHeader('Content-Type', 'application/json');
+                   xhr.onreadystatechange = function() {
+                       if (xhr.readyState === XMLHttpRequest.DONE) {
+                           if (xhr.status === 200) {
+                               alert('문의가 접수되었습니다.');
+                               modal.style.display = 'none';
+                           } else {
+                               alert('문의 접수 중 오류가 발생했습니다.');
+                           }
+                       }
+                   };
+                   const data = JSON.stringify({ question: question });
+                   xhr.send(data);
+               } else {
+                   alert('문의 내용을 입력해주세요.');
+               }
+           });
+       });
     
-	    /* 수량 조절 버튼 */
-	    function minus(button) {
-	        // 부모 요소에서 .quantity 클래스를 가진 요소를 찾음
-	        var quantitySpan = button.parentNode.querySelector('.quantity');
-	        var currentQuantity = parseInt(quantitySpan.innerText);
-	        if (currentQuantity > 1) {  // 최소 수량을 1로 설정
-	            quantitySpan.innerText = currentQuantity - 1;
-	        }
-	    }
-	
-	    function plus(button) {
-	        // 부모 요소에서 .quantity 클래스를 가진 요소를 찾음
-	        var quantitySpan = button.parentNode.querySelector('.quantity');
-	        var currentQuantity = parseInt(quantitySpan.innerText);
-	        quantitySpan.innerText = currentQuantity + 1;
-	    }
+       /* 수량 조절 버튼 */
+       function minus(button) {
+           // 부모 요소에서 .quantity 클래스를 가진 요소를 찾음
+           var quantitySpan = button.parentNode.querySelector('.quantity');
+           var currentQuantity = parseInt(quantitySpan.innerText);
+           if (currentQuantity > 1) {  // 최소 수량을 1로 설정
+               quantitySpan.innerText = currentQuantity - 1;
+           }
+       }
+   
+       function plus(button) {
+           // 부모 요소에서 .quantity 클래스를 가진 요소를 찾음
+           var quantitySpan = button.parentNode.querySelector('.quantity');
+           var currentQuantity = parseInt(quantitySpan.innerText);
+           quantitySpan.innerText = currentQuantity + 1;
+       }
     </script>
     
 </head>
@@ -144,24 +144,24 @@
                 </div>
                 <div>
                     <span>비용: </span>
-					<c:choose>
-						<c:when test="${event.event_price > 0}">
-							<fmt:formatNumber value="${event.event_price}" type="number"
-								groupingUsed="true" />원
-						        </c:when>
-						<c:otherwise>
-							<span>무료</span>
-						</c:otherwise>
-					</c:choose>
-				</div>
+               <c:choose>
+                  <c:when test="${event.event_price > 0}">
+                     <fmt:formatNumber value="${event.event_price}" type="number"
+                        groupingUsed="true" />원
+                          </c:when>
+                  <c:otherwise>
+                     <span>무료</span>
+                  </c:otherwise>
+               </c:choose>
+            </div>
                 <div>
                     <span>장소: </span>
                     <span>${event.event_addr}${event.event_addrdetail}</span>
                 </div>
             </section>
-            <br>
-            <hr>
-            <br>
+            
+            <hr><br>
+            
             <section id="content" class="content">
                 <div>${event.event_content}</div>
             </section>
@@ -225,16 +225,16 @@
                 <div class="apply_category">
                     <a href="javascript:" onclick="location.href='sports_view.do'" id="sports">
                     <c:choose>
-                    	<c:when test="${event.event_sports_idx == 1}">
-                    	<span>러닝</span>
-                    	</c:when>
-                    	<c:when test="${event.event_sports_idx == 2}">
-                    	<span>철인3종</span>
-                    	</c:when>
-                    	<c:otherwise>
-				        <span>기타</span>
-				    	</c:otherwise>
-				    </c:choose>	
+                       <c:when test="${event.event_sports_idx == 1}">
+                       <span>러닝</span>
+                       </c:when>
+                       <c:when test="${event.event_sports_idx == 2}">
+                       <span>철인3종</span>
+                       </c:when>
+                       <c:otherwise>
+                    <span>기타</span>
+                   </c:otherwise>
+                </c:choose>   
                     </a>
                     <a href="javascript:" onclick="location.href='sports_view.do'" id="loc"><span>${event.event_loc}</span></a>
                 </div>
@@ -257,13 +257,13 @@
                         </div>
                         <div class="price">
                             <c:choose>
-						        <c:when test="${event.event_price > 0}">
-						            <fmt:formatNumber value="${event.event_price}" type="number" groupingUsed="true" />원
-						        </c:when>
-						        <c:otherwise>
-						            <span>무료</span>
-						        </c:otherwise>
-						    </c:choose>
+                          <c:when test="${event.event_price > 0}">
+                              <fmt:formatNumber value="${event.event_price}" type="number" groupingUsed="true" />원
+                          </c:when>
+                          <c:otherwise>
+                              <span>무료</span>
+                          </c:otherwise>
+                      </c:choose>
                         </div>
                     </div>     
                 </div>
