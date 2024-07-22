@@ -35,13 +35,14 @@ import dao.UserDAO;
 import util.Common;
 import util.Paging;
 import vo.EventVO;
+import vo.NoticeVO;
 import vo.UserVO;
 
 @Controller
 public class EventController {
+
 	@Autowired
 	HttpServletRequest request;
-
 	@Autowired
 	HttpSession session;
 
@@ -64,15 +65,18 @@ public class EventController {
 		EventVO event = event_dao.eventByIdx(event_idx);
 		int appliecount = event_dao.applieCount(event_idx);
 		int remainticket = event.getEvent_max_joiner() - appliecount;
+
 		List<Integer> viewedEvents = (List<Integer>) session.getAttribute("viewedEvents");
 		if (viewedEvents == null) {
 			viewedEvents = new ArrayList<>();
 		}
+
 		if (!viewedEvents.contains(event_idx)) {
 			event_dao.update_viewcount(event_idx);
 			viewedEvents.add(event_idx);
 			session.setAttribute("viewedEvents", viewedEvents);
 		}
+
 		model.addAttribute("event", event);
 		model.addAttribute("remainticket", remainticket);
 	}
@@ -202,10 +206,13 @@ public class EventController {
 			session.setAttribute("viewedEvents", viewedEvents); // 업데이트된 조회 이벤트 목록을 세션에 다시 저장
 		}
 
+		// 공지사항 조회
+		NoticeVO notice = event_dao.noticeByIdx(event_idx);
+
 		// 바인딩
 		model.addAttribute("event", event);
 		model.addAttribute("remainticket", remainticket);
-
+		model.addAttribute("notice", notice);
 		return Common.Event.VIEW_PATH + "event_detail.jsp";
 	}
 
@@ -342,18 +349,6 @@ public class EventController {
 	@RequestMapping("/applyEvent_list.do")
 	public String applyEvent_list() {
 		return Common.Mypage.VIEW_PATH + "mypage.jsp";
-	}
-
-	// 호스트 페이지 행사 리스트 삭제
-	@RequestMapping("/deleteEvent.do")
-	@ResponseBody
-	public String deleteEvent(@RequestParam("event_idx") int event_idx) {
-		int res = event_dao.deleteEvent(event_idx);
-		if (res > 0) {
-			return "[{'result':'clear'}]";// 삭제 성공
-		} else {
-			return "[{'result':'fail'}]";// 삭제 실패
-		}
 	}
 
 }

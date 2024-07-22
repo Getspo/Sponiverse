@@ -59,10 +59,11 @@
 					</div>
 				</div>
 			</div>
-			<div  class="event_info">
-	            <a class="title-link" href="event_detail.do?event_idx=${event.event_idx}">
-	            	(행사번호 : ${event.event_idx}) ${event.event_name}
-	            </a>
+			<div class="event_info">
+				<a class="title-link" href="event_detail.do?event_idx=${event.event_idx}">
+				(행사번호 : ${event.event_idx}) ${event.event_name}
+				</a>
+			</div>
 			<div class="detail_info">
 				<p class="detail_title">일시</p>
 				<p class="detail_info_data">${event.getFormattedEventHStart()}~${event.getFormattedEventHEnd() }</p>
@@ -100,8 +101,12 @@
 						<div class="join_chart">
 							<div class="join_chartsub">
 								<div>
-									<p class="join_chart_count">44<span class="join_chart_count_unit">&nbsp;명</span></p>
-	                                <p class="join_chart_info_percent">모집정원의&nbsp;<span>6%</span></p>
+									<p class="join_chart_count">
+										44<span class="join_chart_count_unit">&nbsp;명</span>
+									</p>
+									<p class="join_chart_info_percent">
+										모집정원의&nbsp;<span>6%</span>
+									</p>
 								</div>
 								<div class="join_chartgraph">
 									<canvas id="myChart" class="myChart"></canvas>

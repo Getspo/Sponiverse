@@ -14,25 +14,37 @@
 		/* link1 클릭 시 */
 		document.querySelector("#link1").addEventListener(
 		"click", function(event) {
-			document.querySelector(".content_event").style.display = "block"; /* contents_div1 보이기 */
-			document.querySelector(".content_modify").style.display = "none"; /* contents_div2 숨기기 */
-			document.querySelector(".content_withdraw").style.display = "none"; /* contents_div3 숨기기 */
-		});
-
+			document.querySelector(".content_event").style.display = "block"; 
+			document.querySelector(".content_cancel").style.display = "none";
+			document.querySelector(".content_modify").style.display = "none"; 
+			document.querySelector(".content_withdraw").style.display = "none"; 
+		});		
+		
 		/* link2 클릭 시 */
 		document.querySelector("#link2").addEventListener(
 		"click", function(event) {
-			document.querySelector(".content_event").style.display = "none"; /* contents_div1 숨기기 */
-			document.querySelector(".content_modify").style.display = "block"; /* contents_div2 보이기 */
-			document.querySelector(".content_withdraw").style.display = "none"; /* contents_div3 숨기기 */
-		});
-		
+			document.querySelector(".content_event").style.display = "none"; 
+			document.querySelector(".content_cancel").style.display = "block"; 
+			document.querySelector(".content_modify").style.display = "none"; 
+			document.querySelector(".content_withdraw").style.display = "none"; 
+		});		
+
 		/* link3 클릭 시 */
 		document.querySelector("#link3").addEventListener(
 		"click", function(event) {
-			document.querySelector(".content_event").style.display = "none"; /* contents_div1 숨기기 */
-			document.querySelector(".content_modify").style.display = "none"; /* contents_div2 숨기기 */
-			document.querySelector(".content_withdraw").style.display = "block"; /* contents_div3 보이기 */
+			document.querySelector(".content_event").style.display = "none"; 
+			document.querySelector(".content_cancel").style.display = "none"; 
+			document.querySelector(".content_modify").style.display = "block"; 
+			document.querySelector(".content_withdraw").style.display = "none"; 
+		});
+		
+		/* link4 클릭 시 */
+		document.querySelector("#link4").addEventListener(
+		"click", function(event) {
+			document.querySelector(".content_event").style.display = "none"; 
+			document.querySelector(".content_cancel").style.display = "none"; 
+			document.querySelector(".content_modify").style.display = "none"; 
+			document.querySelector(".content_withdraw").style.display = "block"; 
 		});
 	});
 	</script>
@@ -43,9 +55,10 @@
     <div class="mypage_menu">
         <ul>
             <h2>마이페이지</h2>
-            <li><a id="link1">참가 행사</a></li>
-            <li><a id="link2">정보 수정</a></li>
-            <li><a id="link3">회원 탈퇴</a></li>
+            <li><a id="link1">참가행사</a></li>
+            <li><a id="link2">취소내역</a></li>
+            <li><a id="link3">정보수정</a></li>
+            <li><a id="link4">회원탈퇴</a></li>
         </ul>
     </div>
 </body>

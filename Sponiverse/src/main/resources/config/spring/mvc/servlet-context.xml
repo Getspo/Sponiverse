@@ -40,11 +40,11 @@
       <beans:constructor-arg ref="event_daoBean"/>    
       <beans:constructor-arg ref="user_daoBean"/>        
     </beans:bean>
-	
-	<beans:bean class="com.kh.getspo.OrderController">
-		<beans:constructor-arg ref="order_daoBean"/>
-	</beans:bean>
-	
+
+    <beans:bean class="com.kh.getspo.OrderController">
+      <beans:constructor-arg ref="order_daoBean"/>          
+    </beans:bean>
+    
     <!-- 스프링에서 기본으로 제공하는 multipartResolver는 CommonsMultipartResolver 이므로, 
     순수한 multipartResolver를 사용하기 위해 빈 이름으로 "multipartResolver"를 등록해야함 + 프로퍼티를 이용 최대 가능한 업로드 사이즈 지정함 -->
     

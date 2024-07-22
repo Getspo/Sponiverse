@@ -41,8 +41,13 @@ public class OrderDAO {
 	}
 
 	// 사용자가 신청한 행사 리스트
-	public List<OrderVO> selectEventByorder(int user_idx) {
-		return sqlSession.selectList("o.user_order_list", user_idx);
+	public List<OrderVO> selectEventByorder(Map<String, Object> map) {
+		return sqlSession.selectList("o.user_order_list", map);
+	}
+
+	// 사용자가 취소한 신청행사 리스트
+	public List<OrderVO> selectCancelByorder(Map<String, Object> map) {
+		return sqlSession.selectList("o.user_cancel_list", map);
 	}
 
 	// 이벤트신청 삭제
@@ -55,12 +60,23 @@ public class OrderDAO {
 		return sqlSession.selectList("o.user_order_event", event_idx);
 	}
 
-	// 마이페이지에서 행사 리스트 삭제
+	// 마이페이지에서 행사 리스트 취소
 	public int cancelEvent(int user_idx, int event_idx) {
 		Map<String, Integer> map = new HashMap<>();
 		map.put("user_idx", user_idx);
 		map.put("event_idx", event_idx);
-		int res = sqlSession.delete("o.cancel_event", map);
+		int res = sqlSession.update("o.cancel_event", map);
 		return res;
 	}
+
+	// 유저별 신청한 행사 카운트
+	public int ordercountByUser(int user_idx) {
+		return sqlSession.selectOne("o.ordercount", user_idx);
+	}
+
+	// 유저별 신청취소 카운트
+	public int orderCancelCountByUser(int user_idx) {
+		return sqlSession.selectOne("o.orderCancelCount", user_idx);
+	}
+
 }

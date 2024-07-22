@@ -114,20 +114,19 @@ public class OrderController {
 		}
 	}
 
-	//신청내역 삭제
-    @RequestMapping("/orderdelete.do")
-    public String orderdelete(@RequestParam("order_idx") int order_idx) {
-  	  int res = order_dao.deleteOrder(order_idx);
+	//결제 취소 시 신청내역 삭제
+	@RequestMapping("/orderdelete.do")
+	public String orderdelete(@RequestParam("order_idx") int order_idx) {
+		int res = order_dao.deleteOrder(order_idx);
 
-  	  // 리퍼러 URL 가져오기
-  	   String referer = request.getHeader("Referer");
+		// 리퍼러 URL 가져오기
+		String referer = request.getHeader("Referer");
 
-  	  // 현재 페이지로 리다이렉트
-  	   return "redirect:" + referer;
-    }
+		// 현재 페이지로 리다이렉트
+		return "redirect:" + referer;
+	}
 
-
-	// 마이페이지 참가 리스트 삭제
+	// 마이페이지 참가 취소
 	@RequestMapping("/cancelEvent.do")
 	@ResponseBody
 	public String cancelEvent(@RequestParam("user_idx") int user_idx, @RequestParam("event_idx") int event_idx) {
@@ -135,11 +134,11 @@ public class OrderController {
 		int res_del = order_dao.cancelEvent(user_idx, event_idx);
 		session.removeAttribute("event");
 		if (res_del > 0) {
-			return "[{'result':'clear'}]";// 삭제 성공
+			return "[{'result':'clear'}]";// 취소 성공
 		} else {
-			return "[{'result':'fail'}]";// 삭제 실패
+			return "[{'result':'fail'}]";// 취소 실패
 		}
 
 	}
-	
+
 }

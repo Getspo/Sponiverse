@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -32,7 +34,9 @@ import dao.EventDAO;
 import dao.OrderDAO;
 import dao.UserDAO;
 import util.Common;
+import util.Paging;
 import vo.EventVO;
+import vo.NoticeVO;
 import vo.OrderVO;
 import vo.UserVO;
 
@@ -72,17 +76,42 @@ public class MainController {
 
 	// 호스트페이지
 	@RequestMapping("/hostMain.do")
-	public String hostMain(Model model) {
+	public String hostMain(Model model, String page) {
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
+			int nowPage = 1;
+			if (page != null && !page.isEmpty()) {
+				nowPage = Integer.parseInt(page);
+			}
+
+			// 한 페이지에 표시되는 게시물의 시작과 끝 번호를 계산
+			// ?page=2
+			int start = (nowPage - 1) * Common.Host.BLOCKLIST + 1;
+			int end = start + Common.Host.BLOCKLIST - 1;
+
+			// start, end변수를 Map저장
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("start", start);
+			map.put("end", end);
+			map.put("user_idx", user.getUser_idx());
+
+			// 유저별 개최행사 수
+			int row_total = event_dao.eventcountByUser(user.getUser_idx());
+
 			if (user != null) {
-				List<EventVO> events = event_dao.selectEventByUser(user.getUser_idx());
+				List<EventVO> events = event_dao.selectEventPageByUser(map);
 				model.addAttribute("events", events);
+				// 페이징 처리 문자열 생성
+				// 페이지 메뉴
+				String pageMenu = Paging.hostgetPaging("hostMain.do", nowPage, row_total, Common.Host.BLOCKLIST,
+						Common.Host.BLOCKPAGE);
+				model.addAttribute("pageMenu", pageMenu);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+
 		return Common.Host.VIEW_PATH + "host.jsp";
 	}
 
@@ -244,22 +273,6 @@ public class MainController {
 		return jsonObject.toString();
 	}
 
-	// 행사 공지/안내 페이지 이동
-	@RequestMapping("/host_event_notice.do")
-	public String host_event_notice(@RequestParam("event_idx") int event_idx, Model model) {
-		EventVO event = event_dao.eventByIdx(event_idx);
-		model.addAttribute("event", event);
-		return Common.Host.VIEW_PATH + "host_event_notice.jsp";
-	}
-
-	// 행사 공지/안내 작성 페이지 이동
-	@RequestMapping("/host_event_notice_write.do")
-	public String host_event_notice_write(@RequestParam("event_idx") int event_idx, Model model) {
-		EventVO event = event_dao.eventByIdx(event_idx);
-		model.addAttribute("event", event);
-		return Common.Host.VIEW_PATH + "host_event_notice_write.jsp";
-	}
-
 	// 호스트페이지에서 참가자확인페이지 이동(0703 추가)
 	@RequestMapping("/register_list.do")
 	public String register_list(@RequestParam("event_idx") int event_idx, Model model) {
@@ -275,28 +288,158 @@ public class MainController {
 		// 행사 신청한 유저 전체 수 조회
 		int appliecount = event_dao.applieCount(event_idx);
 		model.addAttribute("appliecount", appliecount);
+
 		return Common.Host.VIEW_PATH + "host_register_list.jsp";
 	}
 
 	// 마이페이지이동(+수정을 위한 정보를 들고 가야함)
 	@RequestMapping("/mypageform.do")
-	public String mypage_form(Model model, int user_idx) {
+	public String mypage_form(Model model, int user_idx, String page) {
 		UserVO vo = user_dao.selectOne(user_idx);
+
+		int nowPage = 1;
+		if (page != null && !page.isEmpty()) {
+			nowPage = Integer.parseInt(page);
+		}
+
+		// 한 페이지에 표시되는 게시물의 시작과 끝 번호를 계산
+		// ?page=2
+		int start = (nowPage - 1) * Common.Mypage.BLOCKLIST + 1;
+		int end = start + Common.Mypage.BLOCKLIST - 1;
+
+		// start, end변수를 Map저장
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("user_idx", vo.getUser_idx());
+
+		// 유저별 신청행사 수
+		int row_total = order_dao.ordercountByUser(vo.getUser_idx());
+
+		// 유저별 신청취소 수
+		int rowtotal = order_dao.orderCancelCountByUser(vo.getUser_idx());
 
 		UserVO user = (UserVO) session.getAttribute("user");
 		if (user != null) {
-			List<OrderVO> order = order_dao.selectEventByorder(user.getUser_idx());
+			// 신청행사 리스트
+			List<OrderVO> order = order_dao.selectEventByorder(map);
 			model.addAttribute("order", order);
+
+			// 행사취소 리스트
+			List<OrderVO> cancel = order_dao.selectCancelByorder(map);
+			model.addAttribute("cancel", cancel);
+
+			String pageMenu = Paging.getPaging("mypageform.do?user_idx=" + user.getUser_idx(), nowPage, row_total,
+					Common.Mypage.BLOCKLIST, Common.Mypage.BLOCKPAGE);
+			model.addAttribute("pageMenu", pageMenu);
+
+			String pageMenuCc = Paging.getPaging("mypageform.do?user_idx=" + user.getUser_idx(), nowPage, rowtotal,
+					Common.Mypage.BLOCKLIST, Common.Mypage.BLOCKPAGE);
+			model.addAttribute("pageMenuCc", pageMenuCc);
 		}
 
 		model.addAttribute("vo", vo);
+
 		return Common.Mypage.VIEW_PATH + "mypage.jsp";
 	}
 
-	// 탈퇴 후에 보여질 페이지
+	// 삭제 후에 보여질 페이지
 	@RequestMapping("withdrawalform.do")
 	public String withdrawalform() {
 		return Common.Mypage.VIEW_PATH + "withdraw_after.jsp";
+	}
+
+	/// 행사 공지/안내 페이지 이동
+	@RequestMapping("/host_event_notice.do")
+	public String host_event_notice(@RequestParam("event_idx") int event_idx, Model model) {
+		EventVO event = event_dao.eventByIdx(event_idx);
+		model.addAttribute("event", event);
+		NoticeVO notice = event_dao.noticeByIdx(event_idx);
+		model.addAttribute("notice", notice);
+		return Common.Host.VIEW_PATH + "host_event_notice.jsp";
+	}
+
+	// 행사 공지사항 저장
+	@RequestMapping("/saveNotice.do")
+	@ResponseBody
+	public String host_event_notice_insert(NoticeVO vo) {
+		int res = event_dao.savenotice(vo);
+		String result = "";
+		if (res > 0) {
+			result = "success";
+		} else {
+			result = "fail";
+		}
+
+		return result;
+	}
+
+	// 행사 공지사항 수정
+	@RequestMapping("/updateNotice.do")
+	@ResponseBody
+	public String host_event_notice_update(NoticeVO vo) {
+		int res = event_dao.updatenotice(vo);
+		String result = "";
+		if (res > 0) {
+			result = "success";
+		} else {
+			result = "fail";
+		}
+
+		return result;
+
+	}
+
+	// 호스트 페이지 행사 리스트 취소
+	@RequestMapping("/deleteEvent.do")
+	@ResponseBody
+	public String deleteEvent(@RequestParam("event_idx") int event_idx) {
+		int res = event_dao.deleteEvent(event_idx);
+		if (res > 0) {
+			return "[{'result':'clear'}]";// 취소 성공
+		} else {
+			return "[{'result':'fail'}]";// 취소 실패
+		}
+	}
+
+	// 삭제 후에 보여질 페이지
+	@RequestMapping("/host_event_cancel.do")
+	public String host_event_cancel(Model model, String page) {
+		try {
+			UserVO user = (UserVO) session.getAttribute("user");
+			int nowPage = 1;
+			if (page != null && !page.isEmpty()) {
+				nowPage = Integer.parseInt(page);
+			}
+
+			// 한 페이지에 표시되는 게시물의 시작과 끝 번호를 계산
+			// ?page=2
+			int start = (nowPage - 1) * Common.Host.BLOCKLIST + 1;
+			int end = start + Common.Host.BLOCKLIST - 1;
+
+			// start, end변수를 Map저장
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("start", start);
+			map.put("end", end);
+			map.put("user_idx", user.getUser_idx());
+
+			// 유저별 개최취소 행사 수
+			int row_total = event_dao.eventDeletecountByUser(user.getUser_idx());
+
+			if (user != null) {
+				List<EventVO> events = event_dao.selectEventDeletePageByUser(map);
+				model.addAttribute("events", events);
+				// 페이징 처리 문자열 생성
+				// 페이지 메뉴
+				String pageMenu = Paging.hostgetPaging("hostMain.do", nowPage, row_total, Common.Host.BLOCKLIST,
+						Common.Host.BLOCKPAGE);
+				model.addAttribute("pageMenu", pageMenu);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return Common.Host.VIEW_PATH + "host_event_cancel.jsp";
 	}
 
 }
