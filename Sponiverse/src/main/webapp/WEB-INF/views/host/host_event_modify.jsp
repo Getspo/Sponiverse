@@ -84,11 +84,13 @@
             <h5>행사 기간</h5>
             <div>
                 <p class="start_date">시작 날짜</p>
+                <input type="hidden" id="event_h_start" value="${event.event_h_start}">
                 <input type="date" id="start_date" name="start_date" required>
                 <input type="time" id="start_time" name="start_time" required>
             </div>
             <div>
                 <p class="end_date">종료 날짜</p>
+                <input type="hidden" id="event_h_end" value="${event.event_h_end}">
                 <input type="date" id="end_date" name="end_date" required>
                 <input type="time" id="end_time" name="end_time" required>
                 <span id="endDateWarning"></span>
@@ -100,13 +102,15 @@
             <h5>모집 기간</h5>
             <div>
                 <p class="start_date">시작 날짜</p>
-                <input type="date" id="apply_start_date" name="apply_start_date" required>
-                <input type="time" id="apply_start_time" name="apply_start_time" required>
+                <input type="hidden" id="event_r_start" value="${event.event_r_start}">
+                <input type="date" id="apply_start_date" name="apply_start_date" value="" required>
+                <input type="time" id="apply_start_time" name="apply_start_time" value="" required>
             </div>
             <div>
                 <p class="end_date">종료 날짜</p>
-                <input type="date" id="apply_end_date" name="apply_end_date" required>
-                <input type="time" id="apply_end_time" name="apply_end_time" required>
+                <input type="hidden" id="event_r_end" value="${event.event_r_end}">
+                <input type="date" id="apply_end_date" name="apply_end_date" value="" required>
+                <input type="time" id="apply_end_time" name="apply_end_time" value="" required>
                 <span id="applyEndDateWarning"></span>
                 <span id="totalWarning"></span>
             </div>
@@ -596,6 +600,46 @@
             document.querySelector('.thumbnail_group').style.display = 'block'; // 썸네일 그룹 보이기
         }
         */
+        
+		//시간과 날짜를 분리하는 함수를 사용하기 위해 '행사 시작&종료 일시'와 '모집 시작&종료 일시를 가져옴.
+		let E_h_s = document.getElementById("event_h_start").value;
+		let E_h_e = document.getElementById("event_h_end").value;
+		let E_r_s = document.getElementById("event_r_start").value;
+		let E_r_e = document.getElementById("event_r_end").value;
+        
+		// 'T'를 기준으로 문자열을 나누기
+		let parts_E_h_s = E_h_s.split('T', 2);
+		let parts_E_h_e = E_h_e.split('T', 2);
+		let parts_E_r_s = E_r_s.split('T', 2);
+		let parts_E_r_e = E_r_e.split('T', 2);
+		
+		// 각각 변수에 저장
+        let E_h_s_day = parts_E_h_s[0];
+        let E_h_s_time = parts_E_h_s[1];
+        
+        let E_h_e_day = parts_E_h_e[0];
+        let E_h_e_time = parts_E_h_e[1];
+        
+        let E_r_s_day = parts_E_r_s[0];
+        let E_r_s_time = parts_E_r_s[1];
+
+        let E_r_e_day = parts_E_r_e[0];
+        let E_r_e_time = parts_E_r_e[1];
+        
+		// date 및 time 입력 필드에 값 설정
+		document.getElementById("start_date").value = E_h_s_day;
+		document.getElementById("start_time").value = E_h_s_time;
+		
+		document.getElementById("end_date").value = E_h_e_day;
+		document.getElementById("end_time").value = E_h_e_time;
+		
+		document.getElementById("apply_start_date").value = E_r_s_day;
+		document.getElementById("apply_start_time").value = E_r_s_time;
+		
+		document.getElementById("apply_end_date").value = E_r_e_day;
+		document.getElementById("apply_end_time").value = E_r_e_time;
+		
+        
     </script>
 
 </body>
