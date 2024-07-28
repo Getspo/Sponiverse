@@ -156,17 +156,13 @@ public class MainController {
 			// 예외 처리
 			e.printStackTrace();
 		}
+		
+		//신청취소자 수 조회
+		int cancelpeople = order_dao.canceltotal(event_idx);
+		
+		model.addAttribute("canceltotal", cancelpeople);
+		
 		return Common.Host.VIEW_PATH + "host_event_management.jsp";
-	}
-
-	// 7/9수정
-	// 호스트사이드바에서 이벤트 목록 조회 메소드
-	@RequestMapping("/getEventList")
-	public String getEventList(Model model) {
-		// 내 행사 리스트
-		List<EventVO> events = event_dao.fastevent();
-		model.addAttribute("events", events);
-		return Common.Host.VIEW_PATH + "host_sidebar.jsp";
 	}
 
 	// 7/4 수정
@@ -175,6 +171,16 @@ public class MainController {
 	public String host_event_modify(@RequestParam("event_idx") int event_idx, Model model) {
 		EventVO event = event_dao.eventByIdx(event_idx);
 		model.addAttribute("event", event);
+
+		try {
+			UserVO user = (UserVO) session.getAttribute("user");
+			if (user != null) {
+				List<EventVO> events = event_dao.selectEventByUser(user.getUser_idx());
+				model.addAttribute("events", events);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return Common.Host.VIEW_PATH + "host_event_modify.jsp";
 	}
 
@@ -289,6 +295,16 @@ public class MainController {
 		int appliecount = event_dao.applieCount(event_idx);
 		model.addAttribute("appliecount", appliecount);
 
+		try {
+			UserVO user = (UserVO) session.getAttribute("user");
+			if (user != null) {
+				List<EventVO> events = event_dao.selectEventByUser(user.getUser_idx());
+				model.addAttribute("events", events);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 		return Common.Host.VIEW_PATH + "host_register_list.jsp";
 	}
 
@@ -356,6 +372,17 @@ public class MainController {
 		model.addAttribute("event", event);
 		NoticeVO notice = event_dao.noticeByIdx(event_idx);
 		model.addAttribute("notice", notice);
+
+		try {
+			UserVO user = (UserVO) session.getAttribute("user");
+			if (user != null) {
+				List<EventVO> events = event_dao.selectEventByUser(user.getUser_idx());
+				model.addAttribute("events", events);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 		return Common.Host.VIEW_PATH + "host_event_notice.jsp";
 	}
 
@@ -387,6 +414,17 @@ public class MainController {
 		}
 
 		return result;
+
+	}
+
+	@RequestMapping("/deleteNotice.do")
+	@ResponseBody
+	public String host_event_notice_del(int notice_idx) {
+		int res = event_dao.deletenotice(notice_idx);
+		if (res > 0) {
+			return "success";
+		}
+		return "fail";
 
 	}
 

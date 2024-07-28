@@ -74,8 +74,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM (
 		SELECT RANK() OVER(ORDER BY event_idx DESC) no, b.*
 		FROM (
-		SELECT * FROM getspo_event
-		<trim prefix="WHERE" prefixOverrides="OR|AND">
+		SELECT * FROM getspo_event WHERE delete_status = 'N'
+		<trim prefix="AND" prefixOverrides="OR|AND">
 			<if test="event_loc_list != null">
 				<foreach item="location" collection="event_loc_list"
 					open="(" separator="OR" close=")">
@@ -85,6 +85,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 			<if test="event_sports_idx != null">
 				AND event_sports_idx = #{event_sports_idx}
+			</if>
+			<if test="event_loc != null">
+				AND event_loc = #{event_loc}
 			</if>
 			<if test="event_name != null">
 				OR event_name LIKE '%' || #{event_name} || '%'
@@ -114,8 +117,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 페이지 메뉴에 필요한 전체 행사 게시글 수 조회 -->
 	<select id="event_count" resultType="int"
 		parameterType="java.util.Map">
-		SELECT COUNT(*) FROM getspo_event
-		<trim prefix="WHERE" prefixOverrides="OR|AND">
+		SELECT COUNT(*) FROM getspo_event WHERE delete_status = 'N'
+		<trim prefix="AND" prefixOverrides="OR|AND">
 			<if test="event_loc_list != null">
 				<foreach item="location" collection="event_loc_list"
 					open="(" separator="OR" close=")">
@@ -207,7 +210,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 다가오는 행사 리스트 -->
 	<select id="fast_event" resultType="event">
 		SELECT * FROM getspo_event
-		WHERE event_h_start >= TRUNC(SYSDATE)
+		WHERE event_h_start >= TRUNC(SYSDATE) AND delete_status = 'N'
 		ORDER BY event_h_start ASC
 	</select>
 
@@ -264,4 +267,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{notice_content}, notice_date = sysdate
 	</update>
 
+	<!-- 공지사항 삭제 -->
+	<delete id="delete_notice" parameterType="int">
+		DELETE FROM getspo_notice WHERE notice_idx = #{notice_idx}
+	</delete>
+
+	<!-- 문의하기 등록 -->
+	<insert id="inser_qa" parameterType="qa">
+		INSERT INTO getspo_qa
+		values(
+		seq_question_idx.nextVal,
+		#{user_idx},
+		#{event_idx},
+		#{user_name},
+		#{user_email},
+		#{qa_content},
+		#{qa_is_private},
+		sysdate
+		)
+	</insert>
+
+	<!-- 문의하기 이벤트별 조회 -->
+	<select id="qa_list" parameterType="int" resultType="qa">
+		select *
+		from getspo_qa where event_idx = #{event_idx}
+	</select>
+
+	<!-- 댓글을 단 해당 문의하기idx가져오기 -->
+	<select id="qa_one_idx" parameterType="int" resultType="qa">
+		select *
+		from getspo_qa where qa_idx = #{qa_idx}
+	</select>
+
+	<!-- 댓글 작성 -->
+	<insert id="insert_comment" parameterType="comment">
+		insert into
+		getspo_comment values(
+		seq_qa_comment_idx.nextVal,
+		#{qa_idx},
+		#{user_idx},
+		#{comment_content},
+		sysdate
+		)
+	</insert>
+
+	<!-- 해당 댓글 조회 -->
+	<select id="select_comment_qaidx" parameterType="int"
+		resultType="comment">
+		select * from getspo_comment where qa_idx = #{qa_idx}
+	</select>
+
+	<!-- 댓글삭제전 댓글idx가져오기 -->
+	<select id="select_del_comm" parameterType="int"
+		resultType="comment">
+		select * from getspo_comment where comment_idx =
+		#{comment_idx}
+	</select>
+
+	<!-- 해당 댓글 삭제 -->
+	<delete id="delete_comment" parameterType="int">
+		delete from getspo_comment where comment_idx = #{comment_idx}
+	</delete>
+
 </mapper>
+
+
+
+
+
+

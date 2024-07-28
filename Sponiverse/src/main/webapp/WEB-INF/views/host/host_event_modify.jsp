@@ -1,12 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>행사정보수정</title>
+    <title>행사 정보 수정</title>
 
     <!-- css -->
-    <link rel="stylesheet" href="/getspo/resources/css/event/event_new.css">
+    <link rel="stylesheet" href="/getspo/resources/css/host/host_event_modify.css">
 
     <!-- 폰트 설정 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,8 +52,7 @@
                 <option value="2">철인3종</option>
                 <option value="3">기타</option>
             </select>
-
-            <!-- 07/04 value변경 -->
+            
             <select id="category_loc" name="event_loc" required>
                 <option value="" disabled selected>지역 선택</option>
                 <option value="서울">서울</option>
@@ -130,11 +130,7 @@
             <h5>행사 대표 이미지
                 <input type="button" id="reset_button" style="display: none;" onclick="resetThumbnail()" value="재설정">
             </h5>
-            <!-- 삭제버튼 보류
-            <button type="button" id="delete_button" style="display: none;" onclick="deleteThumbnail()">삭제</button>
-            -->
             <div id="thumbnail_preview">
-                <!-- 이미지가 추가될 자리 -->
                 <img id="image">
             </div>
             <div class="thumbnail_group">
@@ -147,7 +143,7 @@
             <br>
             <h5>행사 정보</h5>
             <div id="summernote">
-                <textarea id="summernote_content" name="event_content" style="display:none;">${event.event_content}</textarea>
+                <textarea id="summernote_content" name="event_content" style="display:none;">${event.event_content}</textarea> 
             </div>
         </div>
 
@@ -198,50 +194,48 @@
                 <input id="entry_gender" name="user_sex" type="checkbox" value="성별" checked disabled>
                 <label for="entry_gender">성별 *</label>
             </span>
-        </div>
+        </div>  
 
         <div class="form-group" id="event_pay_group">
-            <h5>결제방식</h5>
-            <div class="radio-group">
-                <input type="radio" id="free" name="event_paymethod" value="free" required checked="checked">
-                <c:if test="${event.event_paymethod eq 'free'}"></c:if>
-                <label for="free">무료</label>
-                <input type="radio" id="paid" name="event_paymethod" value="paid" required checked="checked">
-                <c:if test="${event.event_paymethod eq 'paid'}"></c:if>
-                <label for="paid">유료</label>
-            </div>
+    <h5>결제방식</h5>
+    <div class="radio-group">
+        <input type="radio" id="free" name="event_paymethod" value="free" required>
+        <label for="free">무료</label>
+        <input type="radio" id="paid" name="event_paymethod" value="paid" required>
+        <label for="paid">유료</label>
+    </div>
 
-            <div class="paid_choice" id="paid_choice">
-                <select id="bank" name="event_bank" value="${event.event_bank}">
-                    <option value="" disabled selected>은행 선택</option>
-                    <option value="kookmin">국민은행</option>
-                    <option value="shinhan">신한은행</option>
-                    <option value="nonghyup">농협중앙회</option>
-                    <option value="sinhyup">신협중앙회</option>
-                    <option value="hana">KEB하나은행</option>
-                    <option value="kakao">카카오뱅크</option>
-                </select>
-                <input id="event_account" name="account" type="text" placeholder="입금받을 계좌번호" required>
-                <input id="event_account_name" name="account_name" type="text" placeholder="예금주 성명" required>
-            </div>
-        </div>
-
-        <div class="form-group" id="ticket_group">
-            <h5>티켓</h5>
-            <input id="ticket_name" name="event_ticketname" type="text" placeholder="티켓명" value="${event.event_ticketname}" required>
-            <input id="member_limit" name="event_max_joiner" type="number" min="1" step="1" placeholder="모집정원" value="${event.event_max_joiner}" required>
-            <input id="ticket_amount" name="event_price" type="number" min="0" max="1000000" step="1000" placeholder="티켓금액" value="${event.event_price}" required>
-
-            <div class="radio-group">
-                <h5>잔여수량</h5>
-                <input type="radio" id="remain_open" name="event_ticket_open" value="open" required checked="checked">
-                <c:if test="${event.event_ticket_open eq 'open'}"></c:if>
-                <label for="remain_open">공개</label>
-                <input type="radio" id="remain_close" name="event_ticket_open" value="close" required checked="checked">
-                <c:if test="${event.event_ticket_open eq 'close'}"></c:if>
-                <label for="remain_close">비공개</label>
-            </div>
-        </div>
+    <div class="paid_choice" id="paid_choice">
+        <select id="bank" name="event_bank">
+            <option value="" disabled checked>은행 선택</option>
+            <option value="kookmin">국민은행</option>
+            <option value="shinhan">신한은행</option>
+            <option value="nonghyup">농협중앙회</option>
+            <option value="sinhyup">신협중앙회</option>
+            <option value="hana">KEB하나은행</option>
+            <option value="kakao">카카오뱅크</option>
+        </select>
+        <input id="event_account" name="event_account" type="text" placeholder="입금받을 계좌번호" value="${event.event_account}">
+        <input id="event_account_name" name="event_account_name" type="text" placeholder="예금주 성명" value="${event.event_account_name}">
+    </div>
+</div>
+		
+		<div class="form-group" id="ticket_group">
+		    <h5>티켓</h5>
+		    <input id="ticket_name" name="event_ticketname" type="text" placeholder="티켓명" value="${event.event_ticketname}" required>
+		    <input id="member_limit" name="event_max_joiner" type="number" min="1" step="1" placeholder="모집정원" value="${event.event_max_joiner}" required>
+		    <input id="ticket_amount" name="event_price" type="number" min="0" max="1000000" step="1000" placeholder="티켓금액" value="${event.event_price}" required>
+		
+		    <div class="radio-group">
+		        <p>잔여수량</p>
+		        <input type="radio" id="remain_open" name="event_ticket_open" value="open" required checked="checked">
+		        <c:if test="${event.event_ticket_open eq 'open'}"></c:if>
+		        <label for="remain_open">공개</label>
+		        <input type="radio" id="remain_close" name="event_ticket_open" value="close" required checked="checked">
+		        <c:if test="${event.event_ticket_open eq 'close'}"></c:if>
+		        <label for="remain_close">비공개</label>
+		    </div>
+		</div>
 
         <div class="form-group" id="contact_group">
             <h5>담당자 정보</h5>
@@ -254,61 +248,60 @@
             <span id="contactTelWarning"></span>
         </div>
 
-        <input type="submit" class="event_btn" value="이벤트 수정완료">
+        <input type="submit" class="event_btn" value="수정 완료"> 
     </form>
 
     <script>
         /* 상세정보 입력창 관련 함수 */
         $(document).ready(function () {
             $('#summernote').summernote({
-                codeviewFilter: false, // 코드 보기 필터 비활성화
-                codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
-                height: 500, // 에디터 높이
-                minHeight: null, // 최소 높이
-                maxHeight: null, // 최대 높이
-                focus: false, // 에디터 로딩 후 포커스 설정
-                lang: 'ko-KR', // 언어 설정 (한국어)
+                codeviewFilter: false,
+                codeviewIframeFilter: false,
+                height: 500,
+                minHeight: null,
+                maxHeight: null,
+                focus: false,
+                lang: 'ko-KR',
                 toolbar: [
-                    ['style', ['style']], // 글자 스타일 설정 옵션
-                    ['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
-                    ['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
-                    ['color', ['color']], // 글자 색상 설정 옵션
-                    ['table', ['table']], // 테이블 삽입 옵션
-                    ['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
-                    ['height', ['height']], // 에디터 높이 조절 옵션
-                    ['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
-                    ['view', ['codeview', 'fullscreen', 'help']], // 코드 보기, 전체 화면, 도움말 옵션
+                    ['style', ['style']],
+                    ['fontsize', ['fontsize']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['insert', ['picture', 'link', 'video']],
+                    ['view', ['codeview', 'fullscreen', 'help']],
                 ],
                 fontSizes: [
                     '8', '9', '10', '11', '12', '14', '16', '18',
                     '20', '22', '24', '28', '30', '36', '50', '72',
-                ], // 글꼴 크기 옵션
+                ],
                 styleTags: [
-                    'p',  // 일반 문단 스타일 옵션
+                    'p',
                     {
                         title: 'Blockquote',
                         tag: 'blockquote',
                         className: 'blockquote',
                         value: 'blockquote',
-                    },  // 인용구 스타일 옵션
-                    'pre',  // 코드 단락 스타일 옵션
+                    },
+                    'pre',
                     {
                         title: 'code_light',
                         tag: 'pre',
                         className: 'code_light',
                         value: 'pre',
-                    },  // 밝은 코드 스타일 옵션
+                    },
                     {
                         title: 'code_dark',
                         tag: 'pre',
                         className: 'code_dark',
                         value: 'pre',
-                    },  // 어두운 코드 스타일 옵션
-                    'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
+                    },
+                    'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
                 ],
                 callbacks: {
                     onImageUpload: function (files, editor, welEditable) {
-                        // 파일 업로드 (다중 업로드를 위해 반복문 사용)
                         for (var i = files.length - 1; i >= 0; i--) {
                             uploadSummernoteImageFile(files[i], this);
                         }
@@ -320,10 +313,8 @@
             $('#summernote').summernote('code', $('#summernote_content').val());
 
             // 폼 제출 이벤트 핸들러
-            $('.new_event_form').on('submit', function () {
-                // Summernote 내용 가져오기
+            $('.new_event_form').on('submit', function() {
                 var content = $('#summernote').summernote('code');
-                // textarea에 내용 설정
                 $('#summernote_content').val(content);
             });
         });
@@ -338,7 +329,7 @@
                 contentType: false,
                 enctype: 'multipart/form-data',
                 processData: false,
-                success: function (data) {
+                success: function(data) {
                     console.log("서버 응답:", data); // 서버 응답 확인을 위해 로그 출력
                     try {
                         var jsonResponse;
@@ -349,7 +340,7 @@
                         }
 
                         if (jsonResponse.responseCode === "success") {
-                            $(el).summernote('insertImage', jsonResponse.url);
+                            $(el).summernote('insertImage', jsonResponse.url);                  
                         } else {
                             alert("이미지 업로드에 실패했습니다.");
                         }
@@ -358,54 +349,67 @@
                         alert("서버 응답을 처리하는 중 오류가 발생했습니다.");
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     console.error("AJAX 오류:", textStatus, errorThrown);
                     alert("이미지 업로드 중 오류가 발생했습니다.");
                 }
             });
         }
-
-        /* 결제방식에 따른 티켓 금액 입력창 활성화/비활성화 함수 */
-        document.addEventListener('DOMContentLoaded', function () {
-            const freeRadio = document.getElementById('free');
-            const paidRadio = document.getElementById('paid');
-            const paidChoice = document.getElementById('paid_choice');
-            const ticketAmount = document.getElementById('ticket_amount');
-
-            freeRadio.addEventListener('change', function () {
-                if (freeRadio.checked) {
-                    paidChoice.style.display = 'block';
-                    paidChoice.querySelectorAll('input, select').forEach(input => {
-
-                        input.value = '';
-                        input.required = false;
-                        input.disabled = true;
-                    });
-                    ticketAmount.disabled = true;
-                    ticketAmount.value = '';
-                    ticketAmount.classList.add('disabled-input');
-                }
-            });
-
-            paidRadio.addEventListener('change', function () {
-                if (paidRadio.checked) {
-                    paidChoice.style.display = 'block';
-                    paidChoice.querySelectorAll('input, select').forEach(input => {
-                        input.required = true;
-                        input.disabled = false;
-                    });
-                    ticketAmount.disabled = false;
-                    ticketAmount.classList.remove('disabled-input');
-                }
-            });
-
-            // Initialize the form based on the initial state of the radio buttons
-            if (freeRadio.checked) {
-                freeRadio.dispatchEvent(new Event('change'));
-            } else if (paidRadio.checked) {
-                paidRadio.dispatchEvent(new Event('change'));
-            }
-        });
+	
+        //티켓결제관련
+        document.addEventListener('DOMContentLoaded', function() {
+	    const freeRadio = document.getElementById('free');
+	    const paidRadio = document.getElementById('paid');
+	    const paidChoice = document.getElementById('paid_choice');
+	    const ticketAmount = document.getElementById('ticket_amount');
+	    const bankSelect = document.getElementById('bank');
+	    const eventAccount = document.getElementById('event_account');
+	    const eventAccountName = document.getElementById('event_account_name');
+	
+	    // 함수 정의
+	    function togglePaidFields() {
+	        if (freeRadio.checked) {
+	            paidChoice.style.display = 'none';
+	            paidChoice.querySelectorAll('input, select').forEach(input => {
+	                input.required = false;
+	            });
+	            ticketAmount.value = 0;
+	            ticketAmount.disabled = true;
+	        } else if (paidRadio.checked) {
+	            paidChoice.style.display = 'block';
+	            paidChoice.querySelectorAll('input, select').forEach(input => {
+	                input.required = true;
+	            });
+	            ticketAmount.disabled = false;
+	        }
+	    }
+	
+	    // 초기 상태 설정
+	    togglePaidFields();
+	
+	    // 이벤트 리스너 설정
+	    freeRadio.addEventListener('change', togglePaidFields);
+	    paidRadio.addEventListener('change', togglePaidFields);
+	
+	    // 결제방식 라디오 버튼 설정
+	    const payMethodValue = "${event.event_paymethod}";
+	    if (payMethodValue === 'free') {
+	        freeRadio.checked = true;
+	    } else if (payMethodValue === 'paid') {
+	        paidRadio.checked = true;
+	    }
+	    togglePaidFields(); // 초기 상태 반영
+	
+	    // 은행 선택 설정
+	    const eventBankValue = "${event.event_bank}";
+	    if (eventBankValue) {
+	        bankSelect.value = eventBankValue;
+	    }
+	
+	    // 계좌번호와 예금주명 값 설정
+	    eventAccount.value = "${event.event_account}";
+	    eventAccountName.value = "${event.event_account_name}";
+	});
 
         /* 참가자 정보 모집 새 항목 추가 함수 */
         function addNewItem() {
@@ -422,14 +426,14 @@
             const newInput = document.createElement('input');
             newInput.type = 'text';
             newInput.placeholder = '새 항목 입력';
-            newInput.oninput = function () {
+            newInput.oninput = function() {
                 newCheckbox.value = newInput.value;
             };
 
             const deleteButton = document.createElement('button');
             deleteButton.type = 'button';
             deleteButton.textContent = '삭제';
-            deleteButton.onclick = function () {
+            deleteButton.onclick = function() {
                 entryGroup.removeChild(newSpan);
             };
 
@@ -444,14 +448,14 @@
         /* 이미지 파일 프리뷰 */
         var cropper;
 
-        $('#cropperModal').on('shown.bs.modal', function (e) {
+        $('#cropperModal').on('shown.bs.modal', function(e) {
             cropper = new Cropper(document.getElementById('cropperImage'), {
                 aspectRatio: 16 / 9,
                 viewMode: 2
             });
         });
 
-        $('#cropperModal').on('hidden.bs.modal', function (e) {
+        $('#cropperModal').on('hidden.bs.modal', function(e) {
             if (cropper) {
                 cropper.destroy();
                 cropper = null;
@@ -462,7 +466,7 @@
             var file = event.target.files[0];
             var reader = new FileReader();
 
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 document.getElementById('cropperImage').src = e.target.result;
                 $('#cropperModal').modal('show');
             };
@@ -470,7 +474,7 @@
             reader.readAsDataURL(file);
         }
 
-        document.getElementById('crop_button').addEventListener('click', function () {
+        document.getElementById('crop_button').addEventListener('click', function() {
             if (cropper) {
                 var canvas = cropper.getCroppedCanvas({
                     width: 960,
@@ -504,17 +508,32 @@
             thumbnailImageInput.value = ''; // 초기화하여 다시 선택할 수 있도록 함
             thumbnailImageInput.click(); // 파일 선택 다이얼로그 표시
 
-            thumbnailImageInput.onchange = function (event) {
+            thumbnailImageInput.onchange = function(event) {
                 handleFileChange(event);
                 thumbnailImageInput.onchange = handleFileChange; // 변경 이벤트 핸들러 복원
             };
         }
+        
+        /* 삭제 버튼 보류
+        function deleteThumbnail() {
+         var thumbnailImageInput = document.getElementById('thumbnail_image');
+         thumbnailImageInput.value = ''; // 파일 입력 초기화
+         document.getElementById('cropperImage').src = ''; // 크롭 이미지 초기화
+         document.getElementById('image').src = ''; // 프리뷰 이미지 초기화
+         document.getElementById('thumbnail_preview').innerHTML = ''; // 썸네일 미리보기 초기화
+         document.getElementById('thumbnail_label').style.display = 'block'; // 썸네일 추가 버튼 다시 보이기
+         document.getElementById('reset_button').style.display = 'none'; // 재설정 버튼 숨기기
+         document.getElementById('delete_button').style.display = 'none'; // 삭제 버튼 숨기기
+         document.getElementById('thumbnail_preview').style.display = 'none'; // 썸네일 미리보기 숨기기
+         document.querySelector('.thumbnail_group').style.display = 'block'; // 썸네일 그룹 보이기
+   	    }
+        */
 
-        //카테고리 포워딩
+        // 카테고리 포워딩
         document.addEventListener('DOMContentLoaded', (event) => {
             const selectedSportIdx = "${event.event_sports_idx}"; // 서버에서 받아온 값을 여기 넣습니다.
             const selectElement = document.getElementById('event_sport_idx');
-
+            
             for (const option of selectElement.options) {
                 if (option.value === selectedSportIdx) {
                     option.selected = true;
@@ -523,11 +542,11 @@
             }
         });
 
-        //지역바인딩한거 포워딩하기
+        // 지역 바인딩한거 포워딩하기
         document.addEventListener('DOMContentLoaded', (event) => {
-            const selectedLoc = "${event.event_loc}"; // 서버에서 받아온  값을 여기 넣습니다.
+            const selectedLoc = "${event.event_loc}"; // 서버에서 받아온 값을 여기 넣습니다.
             const selectElement = document.getElementById('category_loc');
-
+            
             for (const option of selectElement.options) {
                 if (option.value === selectedLoc) {
                     option.selected = true;
@@ -536,21 +555,21 @@
             }
         });
 
-        //유효성 검사
-        document.getElementById('eventForm').addEventListener('submit', function (event) {
+        // 유효성 검사
+        document.getElementById('eventForm').addEventListener('submit', function(event) {
             const startDate = new Date(document.getElementById('start_date').value);
             const endDate = new Date(document.getElementById('end_date').value);
             const applyStartDate = new Date(document.getElementById('apply_start_date').value);
             const applyEndDate = new Date(document.getElementById('apply_end_date').value);
             const contactTel = document.getElementById('contact_tel').value;
-
+            
             const endDateWarning = document.getElementById('endDateWarning');
             const applyEndDateWarning = document.getElementById('applyEndDateWarning');
             const totalWarning = document.getElementById('totalWarning');
             const contactTelWarning = document.getElementById('contactTelWarning');
-
+            
             let valid = true;
-
+            
             if (startDate && endDate && endDate < startDate) {
                 endDateWarning.textContent = "행사 종료 날짜는 시작 날짜 이후여야 합니다";
                 valid = false;
@@ -571,7 +590,7 @@
             } else {
                 totalWarning.textContent = "";
             }
-
+            
             let telpattern = /^\d{3}-\d{4}-\d{4}$/;
             if (!telpattern.test(contactTel)) {
                 contactTelWarning.textContent = "올바른 전화번호를 입력하세요";
@@ -583,37 +602,22 @@
             if (!valid) {
                 event.preventDefault();
             }
-
+            
         });
 
-        /* 삭제 버튼 보류
-        function deleteThumbnail() {
-            var thumbnailImageInput = document.getElementById('thumbnail_image');
-            thumbnailImageInput.value = ''; // 파일 입력 초기화
-            document.getElementById('cropperImage').src = ''; // 크롭 이미지 초기화
-            document.getElementById('image').src = ''; // 프리뷰 이미지 초기화
-            document.getElementById('thumbnail_preview').innerHTML = ''; // 썸네일 미리보기 초기화
-            document.getElementById('thumbnail_label').style.display = 'block'; // 썸네일 추가 버튼 다시 보이기
-            document.getElementById('reset_button').style.display = 'none'; // 재설정 버튼 숨기기
-            document.getElementById('delete_button').style.display = 'none'; // 삭제 버튼 숨기기
-            document.getElementById('thumbnail_preview').style.display = 'none'; // 썸네일 미리보기 숨기기
-            document.querySelector('.thumbnail_group').style.display = 'block'; // 썸네일 그룹 보이기
-        }
-        */
+        // 시간과 날짜를 분리하는 함수를 사용하기 위해 '행사 시작&종료 일시'와 '모집 시작&종료 일시를 가져옴.
+        let E_h_s = document.getElementById("event_h_start").value;
+        let E_h_e = document.getElementById("event_h_end").value;
+        let E_r_s = document.getElementById("event_r_start").value;
+        let E_r_e = document.getElementById("event_r_end").value;
         
-		//시간과 날짜를 분리하는 함수를 사용하기 위해 '행사 시작&종료 일시'와 '모집 시작&종료 일시를 가져옴.
-		let E_h_s = document.getElementById("event_h_start").value;
-		let E_h_e = document.getElementById("event_h_end").value;
-		let E_r_s = document.getElementById("event_r_start").value;
-		let E_r_e = document.getElementById("event_r_end").value;
+        // 'T'를 기준으로 문자열을 나누기
+        let parts_E_h_s = E_h_s.split('T', 2);
+        let parts_E_h_e = E_h_e.split('T', 2);
+        let parts_E_r_s = E_r_s.split('T', 2);
+        let parts_E_r_e = E_r_e.split('T', 2);
         
-		// 'T'를 기준으로 문자열을 나누기
-		let parts_E_h_s = E_h_s.split('T', 2);
-		let parts_E_h_e = E_h_e.split('T', 2);
-		let parts_E_r_s = E_r_s.split('T', 2);
-		let parts_E_r_e = E_r_e.split('T', 2);
-		
-		// 각각 변수에 저장
+        // 각각 변수에 저장
         let E_h_s_day = parts_E_h_s[0];
         let E_h_s_time = parts_E_h_s[1];
         
@@ -626,21 +630,37 @@
         let E_r_e_day = parts_E_r_e[0];
         let E_r_e_time = parts_E_r_e[1];
         
-		// date 및 time 입력 필드에 값 설정
-		document.getElementById("start_date").value = E_h_s_day;
-		document.getElementById("start_time").value = E_h_s_time;
-		
-		document.getElementById("end_date").value = E_h_e_day;
-		document.getElementById("end_time").value = E_h_e_time;
-		
-		document.getElementById("apply_start_date").value = E_r_s_day;
-		document.getElementById("apply_start_time").value = E_r_s_time;
-		
-		document.getElementById("apply_end_date").value = E_r_e_day;
-		document.getElementById("apply_end_time").value = E_r_e_time;
-		
+        // date 및 time 입력 필드에 값 설정
+        document.getElementById("start_date").value = E_h_s_day;
+        document.getElementById("start_time").value = E_h_s_time;
         
-    </script>
+        document.getElementById("end_date").value = E_h_e_day;
+        document.getElementById("end_time").value = E_h_e_time;
+        
+        document.getElementById("apply_start_date").value = E_r_s_day;
+        document.getElementById("apply_start_time").value = E_r_s_time;
+        
+        document.getElementById("apply_end_date").value = E_r_e_day;
+        document.getElementById("apply_end_time").value = E_r_e_time;
+        
+     	// 라디오 버튼 선택된 값 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            // 잔여수량 라디오 버튼 설정
+            const ticketOpenValue = "${event.event_ticket_open}";
+            if (ticketOpenValue === 'open') {
+                document.getElementById('remain_open').checked = true;
+            } else if (ticketOpenValue === 'close') {
+                document.getElementById('remain_close').checked = true;
+            }
 
+            // 결제방식 라디오 버튼 설정
+            const payMethodValue = "${event.event_paymethod}";
+            if (payMethodValue === 'free') {
+                document.getElementById('free').checked = true;
+            } else if (payMethodValue === 'paid') {
+                document.getElementById('paid').checked = true;
+            }
+        });
+    </script>
 </body>
 </html>

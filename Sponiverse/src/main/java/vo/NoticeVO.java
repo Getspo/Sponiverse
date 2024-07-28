@@ -4,9 +4,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class NoticeVO {
-	private int event_idx;
+	private int event_idx, notice_idx;
 	private String notice_title, notice_content;
 	private LocalDateTime notice_date;
+
+	public int getNotice_idx() {
+		return notice_idx;
+	}
+
+	public void setNotice_idx(int notice_idx) {
+		this.notice_idx = notice_idx;
+	}
 
 	public int getEvent_idx() {
 		return event_idx;

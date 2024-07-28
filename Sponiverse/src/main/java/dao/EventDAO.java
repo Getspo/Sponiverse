@@ -12,8 +12,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import vo.CommentVO;
 import vo.EventVO;
 import vo.NoticeVO;
+import vo.QaVO;
 
 public class EventDAO {
 
@@ -132,4 +134,45 @@ public class EventDAO {
 	public int updatenotice(NoticeVO vo) {
 		return sqlSession.update("e.update_notice", vo);
 	}
+
+	// 공지사항 삭제
+	public int deletenotice(int notice_idx) {
+		return sqlSession.delete("e.delete_notice", notice_idx);
+	}
+
+	// 문의하기
+	public int insertQa(QaVO vo) {
+		return sqlSession.insert("e.inser_qa", vo);
+	}
+
+	// 문의하기 이벤트별 조회
+	public List<QaVO> qalist(int event_idx) {
+		return sqlSession.selectList("e.qa_list", event_idx);
+	}
+
+	// 댓글달려고하는 문의하기id
+	public QaVO getQaByIdx(int qa_idx) {
+		return sqlSession.selectOne("e.qa_one_idx", qa_idx);
+	}
+
+	// 댓글 작성
+	public int insertComment(CommentVO vo) {
+		return sqlSession.insert("e.insert_comment", vo);
+	}
+
+	// 댓글 조회
+	public List<CommentVO> getCommentsByQaIdx(int qa_idx) {
+		return sqlSession.selectList("e.select_comment_qaidx", qa_idx);
+	}
+
+	// 댓글삭제를 위한 댓글idx가져오기
+	public CommentVO getCommentByIdx(int comment_idx) {
+		return sqlSession.selectOne("e.select_del_comm", comment_idx);
+	}
+
+	// 댓글삭제
+	public int deleteComment(int comment_idx) {
+		return sqlSession.delete("e.delete_comment", comment_idx);
+	}
+
 }

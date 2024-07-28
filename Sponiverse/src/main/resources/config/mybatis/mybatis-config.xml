@@ -16,6 +16,8 @@
 		<typeAlias type="vo.OrderVO" alias="order"/>
 		<typeAlias type="vo.PayVO" alias="pay"/>
 		<typeAlias type="vo.NoticeVO" alias="notice"/> 
+		<typeAlias type="vo.QaVO" alias="qa"/> 
+		<typeAlias type="vo.CommentVO" alias="comment"/> 
 	</typeAliases>
 	
 	<mappers>

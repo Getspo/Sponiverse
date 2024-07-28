@@ -6,20 +6,20 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>참가자 리스트</title>
-
+		
 		<!-- css -->
         <link rel="stylesheet" href="/getspo/resources/css/host/host_register_list.css">
-
-
+        
+		                
 	</head>
 	<body>
 		<jsp:include page="host_event_navigation.jsp"/>
 		<jsp:include page="host_sidebar.jsp"/>
-
+		
 		<div class="channel-list-container">
 		    <div class="header-row">
 		        <div class="header-content">
-		            <div class="filter-options">
+		            <!-- <div class="filter-options">
 		                <div class="filter-select">
 		                    <select class="filter-dropdown" style="width: 150px;">
 		                        <option value="all">전체</option>
@@ -35,7 +35,7 @@
 		                        <option value="false">출석안함</option>
 		                    </select>
 		                </div>
-		            </div>
+		            </div> -->
 		        </div>
 		    </div>
 		    <div class="info-row">
@@ -44,13 +44,13 @@
 		                <label>신청인원: ${appliecount}명</label> / 
 		                <label>모집 정원: ${event.event_max_joiner}명</label>
 		            </div>
-		            <div class="action-buttons">
+		            <!-- <div class="action-buttons">
 		                <a class="action-btn">다운로드</a>
 		                <div class="search-container">
 		                    <input placeholder="참가자 검색" class="search-input">
 		                    <button class="search-button"><i class="search-icon"></i></button>
 		                </div>
-		            </div>
+		            </div> -->
 		        </div>
 		    </div>
 		    <div class="list-header">
@@ -91,16 +91,24 @@
 					    </c:choose>
 		            </div>
 		            <div class="status-info" style="width: 30%;">
-		                <div><span class="status-confirm">참가확정</span></div>
-		                <span class="status-change-btn">상태변경</span>
+		            <c:choose>
+					    <c:when test="${order.cancel_status eq 'Y'}">
+					        <div><span class="status-confirm">참가 취소</span></div>
+					    </c:when>
+					    <c:otherwise>
+					        <div><span class="status-confirm">참가</span></div>
+					    </c:otherwise>
+					    
+					</c:choose>
+		                <!-- <span class="status-change-btn">상태변경</span> -->
 		            </div>
 		        </div>
-		        <div class="attendance-checkbox">
+		        <!-- <div class="attendance-checkbox">
 		            <input type="checkbox" id="allAttend0" class="filled-in">
 		            <label for="allAttend0">출석</label>
-		        </div>
+		        </div> -->
 		        <div class="empty-space"></div>
-		        <div class="action-links">
+		        <!-- <div class="action-links">
 		            <input type="checkbox" id="cancelLockCheckbox0" class="filled-in">
 		            <label for="cancelLockCheckbox0">참가자 취소 잠금 설정</label>
 		            <div class="action-link-group">
@@ -109,7 +117,7 @@
 		                <a href="#editModal" class="modal-trigger edit-link">수정</a>
 		                <a href="#PaymentCancelModal" class="modal-trigger cancel-link">취소/환불</a>
 		            </div>
-		        </div>
+		        </div> -->
 		    </div>
 		    </c:forEach>
 		</div>

@@ -128,7 +128,7 @@
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	z-index: 1000; /* 다른 요소 위에 나타나도록 설정 */
 	transform: translateX(-110px); /* 위치 조정 */
-	border: 1px solid #e5e7eb; /* 원하는 만큼 왼쪽으로 이동 */
+	border: 1px solid #e5e7eb;
 }
 
 #menu-items.open {

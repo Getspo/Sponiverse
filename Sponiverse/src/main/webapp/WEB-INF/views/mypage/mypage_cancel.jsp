@@ -27,7 +27,7 @@
                                     ${item.event_name}
                                 </a>
                             </td>
-                            <td>${item.cancel_date}</td>
+                            <td>${item.formattedCancelDate}</td>
                             <td> <c:choose>
                              <c:when test="${item.event_price > 0}">
                                  ${item.event_price}

@@ -4,33 +4,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-
-<style>
-* {
-   margin: 0;
-   padding: 0;
-   overflow: hidden;
-   font-family: "Noto Sans KR", sans-serif;
-}
-div {
-   background-size: contain;
-}
-img {
-   width: 100vw;
-   height: 100vh;
-}
-</style>
-
 </head>
-
 <body>
-   <div>
-      <a href="main.do">
-         <img src="/getspo/resources/img/회원탈퇴.png">
-      </a>
-   </div>
+	<div>
+		<h1>『sponiverse』와 함께 해주셔서 감사합니다.</h1>
+	</div>
+	
+	<hr>
+
 </body>
 </html>

@@ -78,5 +78,10 @@ public class OrderDAO {
 	public int orderCancelCountByUser(int user_idx) {
 		return sqlSession.selectOne("o.orderCancelCount", user_idx);
 	}
+	
+	//신청취소자 카운트 조회
+	public int canceltotal(int event_idx) {
+		return sqlSession.selectOne("o.canceltotal", event_idx);
+	}
 
 }

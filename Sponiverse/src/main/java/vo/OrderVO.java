@@ -119,16 +119,6 @@ public class OrderVO {
 		this.cancel_date = cancel_date;
 	}
 
-	//날짜데이터 형식 변경
-	public String getFormattedOrderDate() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		return order_date.format(formatter);
-	}
-	
-	public String getFormattedCancelDate() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		return cancel_date.format(formatter);
-	}
 
 	// 조인된 gettter/setter
 
@@ -164,9 +154,20 @@ public class OrderVO {
 		this.event_addr = event_addr;
 	}
 
-	// 날짜변환
+	
+	//날짜데이터 형식 변경
+	public String getFormattedOrderDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd(EEE) HH:mm");
+		return order_date.format(formatter);
+	}
+	
+	public String getFormattedCancelDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd(EEE) HH:mm");
+		return cancel_date.format(formatter);
+	}
+	
 	public String getFormattedEventHStart() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd(EEE) HH:mm");
 		return event_h_start.format(formatter);
 	}
 

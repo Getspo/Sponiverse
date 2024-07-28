@@ -259,27 +259,27 @@ public class EventVO {
 
 	// 날짜 데이터형식 변경
 	public String getFormattedEventHStart() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd(EEE) HH:mm");
 		return event_h_start.format(formatter);
 	}
 
 	public String getFormattedEventHEnd() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd(EEE) HH:mm");
 		return event_h_end.format(formatter);
 	}
 
 	public String getFormattedEventRStart() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd(EEE) HH:mm");
 		return event_r_start.format(formatter);
 	}
 
 	public String getFormattedEventREnd() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd(EEE) HH:mm");
 		return event_r_end.format(formatter);
 	}
 
 	public String getFormattedEventCreateDate() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd(EEE) HH:mm");
 		return event_createdate.format(formatter);
 	}
 

@@ -44,6 +44,8 @@ public class OrderController {
 			return "redirect:/signinform.do?event_idx";
 		}
 		int userIdx = user.getUser_idx();
+		// OrderVO에 user_idx 설정
+	    order.setUser_idx(userIdx);
 
 		// 이미 신청한 이벤트인지 확인
 		boolean alreadyRegistered = order_dao.isAlreadyRegistered(userIdx, eventIdx);

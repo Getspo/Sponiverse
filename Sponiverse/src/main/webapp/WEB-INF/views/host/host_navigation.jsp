@@ -22,7 +22,9 @@
     <nav class="hostCenterBar">
         <div class="resolution">
             <div class="logo">
-                <img class="hostlogo_img" src="/getspo/resources/img/logo/host_logo.png">
+            	<a href="javascript:" onclick="location.href='hostMain.do'" >
+                	<img class="hostlogo_img" src="/getspo/resources/img/logo/host_logo.png">
+            	</a>
             </div>
 
             <div class="right">

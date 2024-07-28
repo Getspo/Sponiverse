@@ -19,8 +19,11 @@
 }
 
 .host_content .menu_subtitle {
-	color: #878D91;
-	font-size: 18px;
+    color: #878D91;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .host_content table {
@@ -50,6 +53,13 @@
 
 .host_content table a:hover {
 	text-decoration: underline; /* 링크 호버 시 밑줄 효과 */
+}
+
+#event_list {
+    margin-left: auto;
+    font-size: 15px;
+    color: #878D91;
+    text-align: right;
 }
 
 @media all and (max-width: 768px) {

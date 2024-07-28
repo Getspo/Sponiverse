@@ -13,7 +13,7 @@ body {
 
 #event_info_section {
    width: 1200px;
-   margin: 32px auto;
+   margin: 60px 0px 32px 485px;
    display: flex;
    gap: 10px;
 }
@@ -183,7 +183,7 @@ body {
 /* 모집부분 */
 .event_info_section2 {
    width: 1200px;
-   margin: 32px auto;
+   margin: 32px 0px 32px 485px;
 }
 
 .title_box {
@@ -193,7 +193,7 @@ body {
 }
 
 .subtitle {
-   font-size: 15px;
+   font-size: 20px;
    color: #333;
 }
 
@@ -282,7 +282,6 @@ body {
    display: flex;
    justify-content: space-between;
    align-items: center;
-   /* margin-left: 24px; */
 }
 
 .join_chart_count {

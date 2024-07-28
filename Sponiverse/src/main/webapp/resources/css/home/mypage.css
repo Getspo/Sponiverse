@@ -48,6 +48,7 @@
     padding: 30px;
     min-height: 200px;
     display: none;
+    justify-content: center; /* 중앙 정렬 */
 }
 
 /* 회원탈퇴 화면 설정 */
@@ -169,8 +170,12 @@ h2 {
 }
 
 /* -------------------------------- 정보수정 -------------------------------- */
+.information{
+	width: 400px;
+}
+
 .inp {
-    width: 300px;
+    width: 378px;
     height: 10px;
     padding: 14px 12px;
     margin-top: 5px;
@@ -203,22 +208,31 @@ input[type="text"]:focus, input[type="tel"]:focus, input[type="date"]:focus,
 }
 
 .addrinp {
-    width: 300px;
+    width: 378px;
     height: 10px;
     padding: 12px 10px;
     margin-bottom: 10px;
     font-size: 15px;
 }
 
+h4 {
+	width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+}
+
 /* 주소 찾기 버튼 */
 .btn {
     width: 50px;
     height: 25px;
-    margin-left: 241px;
     background-color: white;
     color: #0099bc;
     border: 1px solid #0099bc;
     border-radius: 4px;
+    cursor: pointer;
+    margin-left: auto; /* 버튼을 오른쪽 끝으로 밀어냄 */
 }
 
 /* 취소 버튼 */
@@ -233,7 +247,6 @@ input[type="text"]:focus, input[type="tel"]:focus, input[type="date"]:focus,
     font-size: 15px;
     padding: 0 10px;
     margin-right: 20px;
-    margin-left: 70px;
     cursor: pointer;
 }
 
@@ -259,6 +272,11 @@ input[type="text"]:focus, input[type="tel"]:focus, input[type="date"]:focus,
 #ok_btn:active {
     background-color: #007a99;
     border-color: #007a99;
+}
+
+.last_btn_div {
+    text-align: center; 
+    margin-top: 10px;
 }
 
 /* -------------------------------- 회원탈퇴 -------------------------------- */
