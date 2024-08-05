@@ -91,15 +91,15 @@
 					    </c:choose>
 		            </div>
 		            <div class="status-info" style="width: 30%;">
-		            <c:choose>
-					    <c:when test="${order.cancel_status eq 'Y'}">
-					        <div><span class="status-confirm">참가 취소</span></div>
-					    </c:when>
-					    <c:otherwise>
-					        <div><span class="status-confirm">참가</span></div>
-					    </c:otherwise>
-					    
-					</c:choose>
+		                <c:choose>
+		                   <c:when test="${order.cancel_status eq 'Y'}">
+		                       <div><span class="status-confirm">참가 취소</span></div>
+		                   </c:when>
+		                   <c:otherwise>
+		                       <div><span class="status-confirm">참가</span></div>
+		                   </c:otherwise>
+		                   
+		               </c:choose>
 		                <!-- <span class="status-change-btn">상태변경</span> -->
 		            </div>
 		        </div>

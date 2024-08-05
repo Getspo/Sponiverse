@@ -218,19 +218,24 @@ public class EventController {
       List<QaVO> qaList = event_dao.qalist(event_idx);
       
       // 각 QaVO에 대해 작성자와 행사 개최자 여부 확인
-       for (QaVO qa : qaList) {
-           if (qa.isPrivate() && currentUser != null) {
-               boolean isOwner = qa.getUser_name().equals(currentUser.getUser_name());
-               boolean isHost = event.getUser_idx() == currentUser.getUser_idx();
-               qa.setCanViewPrivate(isOwner || isHost);
-           } else {
-               qa.setCanViewPrivate(false);
-           }
-           
-           // 댓글 조회
-           List<CommentVO> comments = event_dao.getCommentsByQaIdx(qa.getQa_idx());
-           qa.setComments(comments);
-       }
+      for (QaVO qa : qaList) { // qaList의 각 QaVO 객체를 순회
+    	    // 현재 QaVO가 비공개인지와 currentUser가 null이 아닌지를 확인
+    	    if (qa.isPrivate() && currentUser != null) {
+    	        // currentUser가 이 QaVO의 소유자인지 확인
+    	        boolean isOwner = qa.getUser_name().equals(currentUser.getUser_name());
+    	        // currentUser가 이 이벤트의 호스트인지 확인
+    	        boolean isHost = event.getUser_idx() == currentUser.getUser_idx();
+    	        // 소유자이거나 호스트인 경우에만 비공개 내용을 볼 수 있게 설정
+    	        qa.setCanViewPrivate(isOwner || isHost);
+    	    } else {
+    	        // 비공개 내용을 볼 수 없게 설정
+    	        qa.setCanViewPrivate(false);
+    	    }
+    	    
+    	    // 댓글 조회
+    	    List<CommentVO> comments = event_dao.getCommentsByQaIdx(qa.getQa_idx()); // qa의 댓글을 조회
+    	    qa.setComments(comments); // 조회한 댓글을 qa에 설정
+    	}
       
       // 바인딩
       model.addAttribute("event", event);

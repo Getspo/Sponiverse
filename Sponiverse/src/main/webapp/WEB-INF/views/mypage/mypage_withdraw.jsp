@@ -39,7 +39,7 @@
 						return;
 					} else {
 						alert("[회원탈퇴 완료]회원님의 모든 정보가 삭제 되었습니다.");
-						location.href = "main.do";
+						location.href = "withdrawalform.do";
 					}
 		
 				}
