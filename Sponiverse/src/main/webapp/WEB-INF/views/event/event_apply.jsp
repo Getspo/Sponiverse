@@ -23,21 +23,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     
     <script>
-        /* 수량 조절 버튼 */
-        function minus(button) {
-            var quantitySpan = button.parentNode.querySelector('.quantity');
-            var currentQuantity = parseInt(quantitySpan.innerText);
-            if (currentQuantity > 1) {
-                quantitySpan.innerText = currentQuantity - 1;
-            }
-        }
-   
-        function plus(button) {
-            var quantitySpan = button.parentNode.querySelector('.quantity');
-            var currentQuantity = parseInt(quantitySpan.innerText);
-            quantitySpan.innerText = currentQuantity + 1;
-        }
-           
         /* 전체 동의하기 체크박스 클릭 시 모든 체크박스를 체크하거나 체크 해제 */
         function toggleAllCheckboxes(checkbox) {
             var checkboxes = document.querySelectorAll('.sub_agree input[type="checkbox"]');
@@ -135,9 +120,13 @@
                 } else if (order_idx !== "no") {
                     mypayment(order_idx);
                 } else {
+                	console.error("주문 처리 실패: 4");
+                	orderDelete(order_idx);  // 주문 삭제 함수 호출
                     alert("주문 처리에 실패했습니다.");
                 }
             } else if (xhr.readyState == 4) {
+            	console.error("주문 처리 실패: 5");
+            	orderDelete(order_idx);  // 주문 삭제 함수 호출
                 alert("주문 처리에 실패했습니다.");
             }
         }
@@ -168,6 +157,8 @@
                     console.log("Sending payment data to payment.do:", data);
                     sendRequest("payment.do", new URLSearchParams(data).toString(), paymentResultFn, "POST");
                 } else {
+                	console.error("주문 처리 실패: 1");
+                	orderDelete(order_idx);  // 주문 삭제 함수 호출
                     alert("결제에 실패했습니다. 다시 시도해 주세요.");
                 }
             });
@@ -179,13 +170,23 @@
                 console.log("payment.do 응답 데이터:", response);
                 if (response === "success") {
                     alert("결제가 완료되었습니다.");
-                    location.href = "mypageform.do?user_idx=${user.user_idx}";
+                	location.href = "mypageform.do?user_idx="+${user.user_idx};
                 } else {
+                	console.error("주문 처리 실패: 2");
+                	orderDelete(order_idx);  // 주문 삭제 함수 호출
                     alert("else 결제 처리에 실패했습니다. 관리자에게 문의하세요.");
                 }
             } else if (xhr.readyState == 4) {
+            	console.error("주문 처리 실패: 3");
+            	orderDelete(order_idx);  // 주문 삭제 함수 호출
                 alert("xhr==4 결제 처리에 실패했습니다. 관리자에게 문의하세요.");
             }
+        }
+        
+        //주문삭제함수
+        function orderDelete(order_idx) {
+            console.log("Deleting order with order_idx:", order_idx);
+            location.href = "orderdelete.do?order_idx=" + order_idx;
         }
     </script>
 </head>
@@ -219,20 +220,6 @@
                     <div class="ticket_details">
                         <div id="ticketname">
                             ${event.event_ticketname}
-                        </div>
-                        
-                        <div class="ticket_etc">
-                            <div class="amount_btn">
-                                <input type="button" onclick="minus(this)" value="-">
-                                <span class="quantity">1</span>
-                                <input type="button" onclick="plus(this)" value="+">
-                            </div>
-                            
-                            <div id="remainSection" class="remain">
-                                <c:if test="${event.event_ticket_open eq 'open'}">
-                                    <span>잔여수량 : ${remainticket}</span>
-                                </c:if>
-                            </div>
                             
                             <div id="event_price">
                                 <c:choose>
@@ -244,7 +231,7 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             

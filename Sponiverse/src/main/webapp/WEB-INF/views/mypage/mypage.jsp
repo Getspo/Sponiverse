@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -32,10 +31,13 @@
 		<jsp:include page="/WEB-INF/views/mypage/mypage_sidebar.jsp"></jsp:include>
 
 		<div class="contents_wrapper">
+			<!-- 참가행사 -->
 			<jsp:include page="/WEB-INF/views/mypage/mypage_event.jsp"></jsp:include>
-			<!--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━-->
+			<!-- 취소내역 -->
+			<jsp:include page="/WEB-INF/views/mypage/mypage_cancel.jsp"></jsp:include>
+			<!-- 정보수정-->
 			<jsp:include page="/WEB-INF/views/mypage/mypage_modify.jsp"></jsp:include>
-			<!--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━-->
+			<!-- 회원탈퇴-->
 			<jsp:include page="/WEB-INF/views/mypage/mypage_withdraw.jsp"></jsp:include>
 		</div>
 	</div>

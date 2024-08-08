@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import dao.EventDAO;
 import dao.OrderDAO;
-import dao.UserDAO;
-import util.Common;
-import vo.EventVO;
 import vo.OrderVO;
 import vo.PayVO;
 import vo.UserVO;
@@ -33,12 +29,8 @@ public class OrderController {
 	@Autowired
 	OrderDAO order_dao;
 
-	@Autowired
-	UserDAO user_dao;
-
-	public OrderController(OrderDAO order_dao, UserDAO user_dao) {
+	public OrderController(OrderDAO order_dao) {
 		this.order_dao = order_dao;
-		this.user_dao = user_dao;
 	}
 
 	// 이벤트 신청
@@ -52,6 +44,8 @@ public class OrderController {
 			return "redirect:/signinform.do?event_idx";
 		}
 		int userIdx = user.getUser_idx();
+		// OrderVO에 user_idx 설정
+	    order.setUser_idx(userIdx);
 
 		// 이미 신청한 이벤트인지 확인
 		boolean alreadyRegistered = order_dao.isAlreadyRegistered(userIdx, eventIdx);
@@ -65,6 +59,7 @@ public class OrderController {
 
 	}
 
+	// 결제전에 이벤트 신청
 	@RequestMapping(value = "/order.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String orderEvent(OrderVO order) {
@@ -94,6 +89,7 @@ public class OrderController {
 		return result;
 	}
 
+	// 결제내역
 	@RequestMapping(value = "/payment.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String processPayment(@RequestParam("imp_uid") String impUid,
@@ -120,7 +116,19 @@ public class OrderController {
 		}
 	}
 
-	// 마이페이지 참가 리스트 삭제
+	//결제 취소 시 신청내역 삭제
+	@RequestMapping("/orderdelete.do")
+	public String orderdelete(@RequestParam("order_idx") int order_idx) {
+		int res = order_dao.deleteOrder(order_idx);
+
+		// 리퍼러 URL 가져오기
+		String referer = request.getHeader("Referer");
+
+		// 현재 페이지로 리다이렉트
+		return "redirect:" + referer;
+	}
+
+	// 마이페이지 참가 취소
 	@RequestMapping("/cancelEvent.do")
 	@ResponseBody
 	public String cancelEvent(@RequestParam("user_idx") int user_idx, @RequestParam("event_idx") int event_idx) {
@@ -128,9 +136,9 @@ public class OrderController {
 		int res_del = order_dao.cancelEvent(user_idx, event_idx);
 		session.removeAttribute("event");
 		if (res_del > 0) {
-			return "[{'result':'clear'}]";// 삭제 성공
+			return "[{'result':'clear'}]";// 취소 성공
 		} else {
-			return "[{'result':'fail'}]";// 삭제 실패
+			return "[{'result':'fail'}]";// 취소 실패
 		}
 
 	}

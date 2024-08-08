@@ -18,8 +18,7 @@
 <body>
    <swiper-container class="mySwiper"
       pagination="true" pagination-clickable="true" navigation="true" slidesPerView="1" space-between="30" loop="true"
-      centered-slides="true" autoplay-delay="3000" effect="fade"
-      > <!-- grabCursor="true" pauseOnMouseEnter="true" 얘네 두개는 왜 적용안될까요? -->
+      centered-slides="true" autoplay-delay="3000" effect="fade"> <!-- grabCursor="true" pauseOnMouseEnter="true" -->
       <swiper-slide><img class="banner_img" src="resources/img/banner/광고배너(마라톤).png" /></swiper-slide>
       <swiper-slide><img class="banner_img" src="resources/img/banner/광고배너(축구).png" /></swiper-slide>
       <swiper-slide><img class="banner_img" src="resources/img/banner/광고배너(테니스).png" /></swiper-slide>

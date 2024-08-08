@@ -89,6 +89,16 @@ document.addEventListener("DOMContentLoaded", function() {
 				
 				
 				//유효성 검사
+				
+				//아이디
+				//알파벳 소문자로 시작하고, 그 다음에는 알파벳 소문자나 숫자가 6자에서 20자까지
+				let idpattern = /^[a-z][a-z0-9]{5,19}$/;
+				if(!idpattern.test(id.value)){
+					idWarning.textContent = "6~20자의 영문 소문자와 숫자만 사용 가능합니다"
+					return;					
+				}else{
+					idWarning.textContent = ""; //경고 메세지 초기화
+				}
 												
 				// 비밀번호
 				// 최소 8자 이상, 최대 15자 이하, 영문 대소문자 포함, 숫자, 특수문자 포함

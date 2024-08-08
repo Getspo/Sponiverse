@@ -48,7 +48,7 @@
             	
 				<div class="form-group">
 					<p>비밀번호</p> 
-					<input type="password" id="user_pwd" name="user_pwd" placeholder="6~15자의 영문 대/소문자 숫자 및 특수문자 조합" required>
+					<input type="password" id="user_pwd" name="user_pwd" placeholder="8~15자의 영문 대/소문자 숫자 및 특수문자 조합" required>
 					<span id="passwordWarning"></span>
 				</div>
 				

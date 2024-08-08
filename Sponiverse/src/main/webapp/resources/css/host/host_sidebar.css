@@ -1,12 +1,12 @@
-/* host_sidebar.css */
+@charset "UTF-8";
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
 }
 
 :root {
-  --sidebar-width: 270px;
-  --sidebar-height: 90vh;
+    --sidebar-width: 270px;
+    --sidebar-height: 90vh;
 }
 
 .sidebar {
@@ -19,6 +19,23 @@ body {
     top: 85px; /* 네비게이션 바 높이 만큼 내림 */
     margin-top: 0; /* 여기서 margin-top 조정 */
     z-index: 500; /* 사이드바가 네비게이션 바 아래에 오도록 */
+}
+
+.event_select {
+    margin: 20px 15px;
+}
+
+.event_select select {
+    padding: 10px;
+    height: 50px;
+    width: 220px;
+    font-size: 20px;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    appearance: none; /* 기본 드롭다운 화살표 제거 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 .menu {
@@ -41,10 +58,20 @@ body {
     cursor: pointer;
 }
 
+.menu-link:hover {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
 .submenu {
     list-style-type: none;
     padding: 0;
     display: none;
+}
+
+.menu-item:hover .submenu {
+    display: block;
 }
 
 .submenu li a {
@@ -55,19 +82,8 @@ body {
     text-decoration: none;
 }
 
-.event_select {
-    margin: 20px 15px;
-}
-
-.event_select select {
-    padding: 10px;
-    height: 50px;
-    width: 220px;
-    font-size: 20px;
-    background-color: white; /* 기본 배경색 설정 */
-    color: black; /* 기본 글자색 설정 */
-    border: 1px solid #ccc; /* 기본 테두리 설정 */
-    appearance: none; /* 기본 드롭다운 화살표 제거 */
-    -webkit-appearance: none;
-    -moz-appearance: none;
+.submenu li a:hover {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
 }

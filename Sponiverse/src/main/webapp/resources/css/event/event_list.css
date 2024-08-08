@@ -89,7 +89,7 @@ body {
 .dayloc-box {
 	display: flex; /* 플렉스 박스로 설정 */
 	align-items: center; /* 아이템 수직 중앙 정렬 */
-	justify-content: flex-start; /* 아이템 왼쪽 정렬 */
+	justify-content: space-between; /* 아이템 왼쪽 정렬 */
 	font-size: 14px; /* 글꼴 크기 설정 */
 	color: gray; /* 글꼴 색상 설정 */
 	margin: 7px 0; /* 위아래 여백 설정 */
@@ -183,6 +183,7 @@ body {
 	width: 16px;
 	height: 16px;
 	accent-color: #0099bc;
+	cursor: pointer;
 }
 
 .checkbox-group label {
